@@ -9,8 +9,8 @@ Nico_TW_chomper = lmn_ChomperAtk:new{
 	SoundBase = "/enemy/scorpion_soldier_1",
 	PowerCost = 1,
 	Upgrades = 2,
-	UpgradeCost = {1, 2},
-	UpgradeList = { "Dazed, -1 Damage", "Unlimited Range" },
+	UpgradeCost = {1, 1},
+	UpgradeList = { "Dazed, -1 Damage", "+2 Range" },
 	TipImage = {
 		Unit = Point(2,2),
 		Enemy = Point(2,0),
@@ -122,7 +122,6 @@ function Nico_TW_chomper:GetSkillEffect(p1, p2)
 		d.sAnimation = self.Anim_Impact .. dir
 		ret:AddMelee(p1, d, NO_DELAY)
 	end
-
 	return ret
 end
 
@@ -211,7 +210,7 @@ function Nico_TW_chomper_A:GetSecondTargetArea(p1,p2)
 	if target:Manhattan(threat)==1 then
 		for i = DIR_START,DIR_END do
 			local curr = target + DIR_VECTORS[i]
-			if Board:IsValid(curr) and curr ~= threat then
+			if Board:IsValid(curr) then-- and curr ~= threat then
 				ret:push_back(curr+displace)
 			end
 		end
@@ -220,7 +219,7 @@ function Nico_TW_chomper_A:GetSecondTargetArea(p1,p2)
 		for i = DIR_START,DIR_END do
 			for j = 2,7 do
 				local curr = target + DIR_VECTORS[i]*j
-				if Board:IsValid(curr) and curr ~= threat then
+				if Board:IsValid(curr) then-- and curr ~= threat then
 					ret:push_back(curr+displace)
 				end
 			end
@@ -271,9 +270,9 @@ function Nico_TW_chomper_A:GetFinalEffect(p1,p2,p3)
 end
 
 Nico_TW_chomper_B = Nico_TW_chomper:new{
-	UpgradeDescription = "Pull in a target from any distance.",
-	Range = 7,
+	UpgradeDescription = "Increase range by 2.",
+	Range = 4,
 }
 Nico_TW_chomper_AB = Nico_TW_chomper_A:new{
-	Range = 7,
+	Range = 4,
 }
