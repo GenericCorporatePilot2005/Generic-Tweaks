@@ -4,7 +4,7 @@ modApi:appendAsset("img/icon_acidsmoke.png", scriptPath.."img/icon_acidsmoke.png
 Location["icon_acidsmoke.png"] = Point(-22,9)
 
 Nico_TW_puffer = lmn_PufferAtk:new{
-	Name = "Spore Blaster",
+	Name = "Spore Emitter",
 	Description = "Create smoke on target tiles, and damage them.",
 	Icon = "weapons/lmn_PufferAtk1.png",
 	Class = "TechnoVek",

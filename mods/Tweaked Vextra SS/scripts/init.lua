@@ -1,15 +1,55 @@
 local mod = {
 	id = "Nico_TW_Vextra",
     name = "Tweaked Vextra SS",
-    description="This mod tweaks some loose ends in the mod Vextra, mostly on their Secret Squad.",
+    description="This mod tweaks some loose ends in the mod Vextra, mostly on their Secret Squad.(Check the options once the mod's enabled to see those options)",
 	modApiVersion = "2.8.2",
-    version="1",
+    version="1.2",
 	gameVersion = "1.2.83",
 	icon = "img/icon.png",
 	dependencies = {"Djinn_NAH_Tatu_Vextra"},
 	libs = {},
 }
 function mod:init()
+    local options = mod_loader.currentModContent[mod.id].options
+    local path = mod_loader.mods[modApi.currentMod].resourcePath
+    local writepath = "img/weapons/"
+    local readpath = path .. writepath
+    local Nico_tw_fly_weapon= options["Nico_tw_fly_weapon"].value
+    if Nico_tw_fly_weapon==1 then
+        modApi:appendAsset(writepath.."DNT_SS_SappingProboscis.png", readpath.."DNT_SS_SappingProboscis.png")
+    end
+    --squad's tweaked sprites
+        local Nico_new_sprites= options["Nico_SS_sprites"].value
+        if Nico_new_sprites==1 then
+            local files = {
+                "DNT_dragonfly_mech.png",
+                "DNT_dragonfly_mech_a.png",
+                "DNT_dragonfly_mech_w_broken.png",
+                "DNT_dragonfly_mech_broken.png",
+                "DNT_dragonfly_mech_death.png",
+                "DNT_dragonfly_mech_ns.png",
+                "DNT_fly_mech.png",
+                "DNT_fly_mech_a.png",
+                "DNT_fly_mech_w_broken.png",
+                "DNT_fly_mech_broken.png",
+                "DNT_fly_mech_death.png",
+                "DNT_fly_mech_ns.png",
+                "DNT_stinkbug_mech.png",
+                "DNT_stinkbug_mech_a.png",
+                "DNT_stinkbug_mech_w.png",
+                "DNT_stinkbug_mech_w_broken.png",
+                "DNT_stinkbug_mech_broken.png",
+                "DNT_stinkbug_mech_death.png",
+                "DNT_stinkbug_mech_ns.png",
+            }
+        local mechPath = path .."img/units/player/"
+        for _, file in ipairs(files) do
+            modApi:appendAsset("img/units/player/".. file, mechPath .. file)
+            end
+        end
+end
+
+function mod:metadata()--Don't make any changes to resources in metadata. metadata runs regardless of if your mod is enabled or not.
     --Op Techno-Stinkbug
         modApi:addGenerationOption(
             "Nico_Mech_Stinkbug", "Old Techno-Stinkbug",
@@ -17,7 +57,7 @@ function mod:init()
             {
                 strings = { "nah, I'm fine without it.", "YES, F*CK BALANCE!!!"},
                 values = { 0, 1},
-                value = 1
+                value = 0
             }
         )
     --Op Leader Stinkbug
@@ -42,7 +82,7 @@ function mod:init()
         )
     --adds the weapons to the Weapon Deck
         modApi:addGenerationOption(
-            "Nico_weapon_deck", "Vextra SS's weapons on Weapon Deck",
+            "Nico_tw_vextra_weapon_deck", "Vextra SS's weapons on Weapon Deck",
             "Adds the three Cyborg weapons to the weapon deck.\nREQUIRES RESTART TO TAKE EFFECT!",
             {
                 strings = { "Do it.", "Don't."},
@@ -50,16 +90,19 @@ function mod:init()
                 value = 0
             }
         )
-        local options = mod_loader.currentModContent[mod.id].options
-        local resourcePath = mod.resourcePath
-        local scriptPath = mod.scriptPath
-        local writepath = "img/weapons/"
-        local readpath = resourcePath .. writepath
-        modApi:appendAsset(writepath.."DNT_SS_SappingProboscis.png", readpath.."DNT_SS_SappingProboscis.png")
+    --Tweaked Techno-Fly's weapon icon
+        modApi:addGenerationOption(
+            "Nico_tw_fly_weapon", "Tweaked Techno-Fly's weapon icon",
+            "New icon Techno-Fly's weapon, meant to resemble the Mech's portrait.\nREQUIRES RESTART TO TAKE EFFECT!",
+            {
+                strings = { "Weapon's Default Icon.", "Tweaked Icon."},
+                values = { 0, 1},
+                value = 0
+            }
+        )
 end
 
 function mod:load(options, version)
-
     --op Techno-Stinkbug
         local opMechStinkbug= options["Nico_Mech_Stinkbug"].value
         if opMechStinkbug==1 then            
@@ -90,7 +133,6 @@ function mod:load(options, version)
                 local ret = SkillEffect()
                 local dir = GetDirection(p2 - p1)
                 local mission = GetCurrentMission()
-                if not mission then LOG("@NamesAreHard on Discord if you see this thank you") end
                 if not mission.DNT_FartList then mission.DNT_FartList = {} end
             
                 local damage = SpaceDamage(p2,self.Damage,dir) -- attack
@@ -207,45 +249,12 @@ function mod:load(options, version)
             end
         end
     
-    --squad's tweaked sprites
-        local Nico_new_sprites= options["Nico_SS_sprites"].value
 
-        if Nico_new_sprites==1 then
-            local readPath = scriptPath.."squad/"
-
-            local sprites = require(scriptPath.."libs/sprites")
-
-            sprites.addMechs(
-            {
-                Name = "DNT_dragonfly_mech",
-                Default =           { PosX = -30, PosY = -16},
-                Animated =          { PosX = -30, PosY = -16, NumFrames = 8},
-                Broken =            { PosX = -30, PosY = -16},
-                Icon =              {},
-            },
-            {
-                Name = "DNT_stinkbug_mech",
-                Default =           { PosX = -24, PosY = -3},
-                Animated =          { PosX = -24, PosY = -3, NumFrames = 4},
-                Broken =            { PosX = -24, PosY = -3},
-                Submerged =         { PosX = -24, PosY = 2 },
-                SubmergedBroken =   { PosX = -24, PosY = 2 }, --NEEDS SUBMERGED BROKEN
-                Icon =              {},
-            },
-            {
-                Name = "DNT_fly_mech",
-                Default =           { PosX = -26, PosY = -16},
-                Animated =          { PosX = -26, PosY = -16, NumFrames = 4},
-                Broken =            { PosX = -26, PosY = -16},
-                Icon =              {},
-            }
-            )
-        end
         
     --adds the weapons to the Weapon Deck
-        local Nico_weapon_deck= options["Nico_weapon_deck"].value
+        local Nico_tw_vextra_weapon_deck= options["Nico_tw_vextra_weapon_deck"].value
 
-        if Nico_weapon_deck==0 then
+        if Nico_tw_vextra_weapon_deck==0 then
             modApi:addWeaponDrop("DNT_SS_AcridSpray")
             modApi:addWeaponDrop("DNT_SS_SappingProboscis")
             modApi:addWeaponDrop("DNT_SS_SparkHurl")

@@ -1,5 +1,5 @@
 Nico_TW_chomper = lmn_ChomperAtk:new{
-	Name = "Iron Jaws",
+	Name = "Dionaea Jaws",
 	Description = "Pulls in a target within 2 tiles to bite it.\n(Stable targets pull you in instead)\nFire extends the range.",
 	Icon = "weapons/lmn_ChomperAtk1.png",
 	Class = "TechnoVek",

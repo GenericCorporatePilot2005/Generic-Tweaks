@@ -13,11 +13,21 @@ local mod = {
 function mod:init()
 	require(self.scriptPath .."assets")
 	require(self.scriptPath .."pawns")
-	require(self.scriptPath .."pilots")
 	require(self.scriptPath .."weapons/weapons")
 	local options = mod_loader.currentModContent[mod.id].options
+	    --adds the weapons to the Weapon Deck
+        local Nico_tw_ITW_weapon_deck= options["Nico_tw_ITW_weapon_deck"].value
+
+        if Nico_tw_ITW_weapon_deck==0 then
+            modApi:addWeaponDrop("Nico_TW_chili")
+            modApi:addWeaponDrop("Nico_TW_chomper")
+            modApi:addWeaponDrop("Nico_TW_puffer")
+        end
+end
+
+function mod:metadata()--Don't make any changes to resources in metadata. metadata runs regardless of if your mod is enabled or not.
+
 	modApi:addGenerationOption(
-		--I want these to affect the mech
 		"Nico_Chili_Sprites", "Techno-Chili's Sprites",
 		"What the Sprites of the Techno-Chili will be. REQUIRES RESTART TO TAKE EFFECT!",
 		{
@@ -55,6 +65,15 @@ function mod:init()
 		}
 	)
 	modApi:addGenerationOption(
+		"Nico_Puffer_Palette", "Techno-Puffer's Palettes",
+		"What the palette of the Techno-Puffer will be. REQUIRES RESTART TO TAKE EFFECT!",
+		{
+			strings = { "Secret Squad", "Default", "Alpha"},
+			values = { 0, 1, 2},
+			value = 1
+		}
+	)
+	modApi:addGenerationOption(
 		"Nico_Chomper_Palette", "Techno-Chomper's Palettes",
 		"What the palette of the Techno-Chomper will be. REQUIRES RESTART TO TAKE EFFECT!",
 		{
@@ -64,16 +83,15 @@ function mod:init()
 		}
 	)
 	modApi:addGenerationOption(
-		"Nico_Puffer_Palette", "Techno-Puffer's Palettes",
-		"What the palette of the Techno-Puffer will be. REQUIRES RESTART TO TAKE EFFECT!",
+		"Nico_tw_ITW_weapon_deck", "Secret Plant's weapons on Weapon Deck",
+		"Adds the three Cyborg weapons to the weapon deck.\nREQUIRES RESTART TO TAKE EFFECT!",
 		{
-			strings = { "Secret Squad", "Default", "Alpha"},
-			values = { 0, 1, 2},
-			value = 1
+			strings = { "Do it.", "Don't."},
+			values = { 0, 1},
+			value = 0
 		}
 	)
 end
-
 
 function mod:load(options, version)
 end

@@ -1,5 +1,9 @@
+local mod = modApi:getCurrentMod()
+local path = mod_loader.mods[modApi.currentMod].resourcePath
+local scriptPath = mod.scriptPath
+require(scriptPath .."weapons/weapons")
 modApi:addPalette{--base chili
-    Image="units/player/lmn_chili_ns.png",
+    Image="units/player/chili_palette_1.png",
     ID = "Nico_itw_chili",
     Name = "Spicy Red",
     PlateHighlight = {255,199,54},--lights
@@ -12,7 +16,7 @@ modApi:addPalette{--base chili
     BodyHighlight  = {177,221,108},--metal light
 }
 modApi:addPalette{--alpha chili
-    Image="units/player/chilialt1_ns.png",
+    Image="units/player/chili_palette_2.png",
     ID = "Nico_itw_alpha_chili",
     Name = "Flame Blue & Orange",
     PlateHighlight = {255,199,54},--lights
@@ -25,7 +29,7 @@ modApi:addPalette{--alpha chili
     BodyHighlight  = {110,207,226},--metal light
 }
 modApi:addPalette{--boss chili
-    Image="units/player/chilialt2_ns.png",
+    Image="units/player/chili_palette_3.png",
     ID = "Nico_itw_boss_chili",
     Name = "Red HellFire",
     PlateHighlight = {197,255,255},--lights
@@ -38,7 +42,7 @@ modApi:addPalette{--boss chili
     BodyHighlight  = {249,81,81},--metal light
 }
 modApi:addPalette{--base puffer
-    Image="units/player/pufferalt_ns.png",
+    Image="units/player/puffer_palette.png",
     ID = "Nico_itw_puffer",
     Name = "Fungal Purple",
     PlateHighlight = {255,199,54},--lights
@@ -51,7 +55,7 @@ modApi:addPalette{--base puffer
     BodyHighlight  = {155,135,133},--metal light
 }
 modApi:addPalette{--alpha puffer
-    Image="units/player/pufferalt_ns.png",
+    Image="units/player/puffer_palette.png",
     ID = "Nico_itw_alpha_puffer",
     Name = "Cyan Mycelium",
     PlateHighlight = {255,199,54},--lights
@@ -64,7 +68,7 @@ modApi:addPalette{--alpha puffer
     BodyHighlight  = {122,113,135},--metal light
 }
 modApi:addPalette{--base chomper
-    Image="units/player/lmn_chomper_ns.png",
+    Image="units/player/chomper_palette_1.png",
     ID = "Nico_itw_chomper",
     Name = "Gluttonous Green",
     PlateHighlight = {255,199,54},--lights
@@ -77,7 +81,7 @@ modApi:addPalette{--base chomper
     BodyHighlight  = {177,221,108},--metal light
 }
 modApi:addPalette{--alpha chomper
-    Image="units/player/chomperalt1_ns.png",
+    Image="units/player/chomper_palette_2.png",
     ID = "Nico_itw_alpha_chomper",
     Name = "Deep Blue Stomach",
     PlateHighlight = {255,199,54},--lights
@@ -90,7 +94,7 @@ modApi:addPalette{--alpha chomper
     BodyHighlight  = {110,207,226},--metal light
 }
 modApi:addPalette{--boss chomper
-    Image="units/player/chomperalt2_ns.png",
+    Image="units/player/chomper_palette_3.png",
     ID = "Nico_itw_boss_chomper",
     Name = "Endless Crimson Hunger",
     PlateHighlight = {243,255,134},--lights
@@ -102,76 +106,67 @@ modApi:addPalette{--boss chomper
     BodyColor      = {183,85,31},--metal mid
     BodyHighlight  = {210,114,36},--metal light
 }
-lmn_ChomperAtk = lmn_ChomperAtk:new{
-	Icon = "weapons/lmn_ChomperAtkB.png",
-}
-local mod = mod_loader.mods[modApi.currentMod]
-local path = mod.resourcePath
 
-modApi.events.onModLoaded:subscribe(function(id)
-	if id ~= mod.id then return end
-	local options = mod_loader.currentModContent[id].options
-    --Chili
-        local paletteChili
-        paletteChili = options["Nico_Chili_Palette"].value
-
+local mod = modApi:getCurrentMod()
+local options = mod_loader.currentModContent[mod.id].options
+		--Chili
+        local paletteChili = options["Nico_Chili_Palette"].value
+        local spritesChili = options["Nico_Chili_Sprites"].value
+	
         LOG("paletteChili: " .. paletteChili)
 
-        if paletteChili==1 then
+        if paletteChili==0 and spritesChili==1 then
+            modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Chili.png", path .."img/portraits/chilialt0.5.png")
+        elseif paletteChili==1 then
             LOG(" -> Default!")
-            lmn_Chili = lmn_Chili:new{
-                ImageOffset = modApi:getPaletteImageOffset("Nico_itw_chili"),
-            }
+            lmn_Chili.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_chili")
         elseif paletteChili==2 then
             LOG(" -> Alpha!")
-            lmn_Chili = lmn_Chili:new{
-                ImageOffset = modApi:getPaletteImageOffset("Nico_itw_alpha_chili"),
-            }
+            lmn_Chili.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_alpha_chili")
         elseif paletteChili==3 then
             LOG(" -> Leader!")
-            lmn_Chili = lmn_Chili:new{
-                ImageOffset = modApi:getPaletteImageOffset("Nico_itw_boss_chili"),
-            }
+            lmn_Chili.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_boss_chili")                
+        else
+            LOG(" -> Secret Squad!")
         end
-    --Chomper
-        local paletteChomper
-        paletteChomper = options["Nico_Chomper_Palette"].value
-
-        LOG("paletteChomper: " .. paletteChomper)
-
-        if paletteChomper==1 then
-            LOG(" -> Default!")
-            lmn_Chomper = lmn_Chomper:new{
-                ImageOffset = modApi:getPaletteImageOffset("Nico_itw_chomper"),
-            }
-        elseif paletteChomper==2 then
-            LOG(" -> Alpha!")
-            lmn_Chomper = lmn_Chomper:new{
-                ImageOffset = modApi:getPaletteImageOffset("Nico_itw_alpha_chomper"),
-            }
-        elseif paletteChomper==3 then
-            LOG(" -> Leader!")
-            lmn_Chomper = lmn_Chomper:new{
-                ImageOffset = modApi:getPaletteImageOffset("Nico_itw_boss_chomper"),
-            }
-        end
-        
     --Puffer
-        local palettePuffer
-        palettePuffer = options["Nico_Puffer_Palette"].value
+        local palettePuffer= options["Nico_Puffer_Palette"].value
 
         LOG("palettePuffer: " .. palettePuffer)
 
-        if palettePuffer==1 then
+        if palettePuffer==0 then
+            modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Puffer.png", path .."img/portraits/pufferalt0.5.png")
+        elseif palettePuffer==1 then
             LOG(" -> Default!")
-            lmn_Puffer = lmn_Puffer:new{
-                ImageOffset = modApi:getPaletteImageOffset("Nico_itw_puffer"),
-            }
+            lmn_Puffer.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_puffer")
         elseif palettePuffer==2 then
+            Nico_TW_puffer.Emitter = "lmn_Puffer_Cloud_Burst_Alpha"
+            Nico_TW_puffer.Icon="weapons/lmn_PufferAtk2.png"
+            modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Puffer.png", path .."img/portraits/pufferalt.png")--alpha puffer's pilot
             LOG(" -> Alpha!")
-            lmn_Puffer = lmn_Puffer:new{
-                ImageOffset = modApi:getPaletteImageOffset("Nico_itw_alpha_puffer"),
-            }
-            modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Puffer.png", path .."img/portraits/pufferalt.png")
+            lmn_Puffer.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_alpha_puffer")
+        else
+            LOG(" -> Secret Squad!")
         end
-end)
+    --Chomper
+        local paletteChomper = options["Nico_Chomper_Palette"].value
+        local spritesChomper = options["Nico_Chomper_Sprites"].value
+
+        LOG("paletteChomper: " .. paletteChomper)
+
+        if paletteChomper==0 and spritesChomper==1 then
+            modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Chomper.png", path .."img/portraits/chomperalt0.5.png")
+        elseif paletteChomper==1 then
+            LOG(" -> Default!")
+            lmn_Chomper.Icon = path .."img/units/aliens/chomperatl0.5ic.png"
+            lmn_Chomper.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_chomper")
+        elseif paletteChomper==2 then
+            LOG(" -> Alpha!")
+            lmn_Chomper.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_alpha_chomper")
+        elseif paletteChomper==3 then
+            LOG(" -> Leader!")
+            lmn_Chomper.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_boss_chomper")
+        else
+            LOG(" -> Secret Squad!")
+        end
+        

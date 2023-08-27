@@ -1,7 +1,7 @@
 
 Nico_TW_chili = Prime_Flamethrower:new{
 	Name = "Chili Breath",
-	Icon = "weapons/lmn_ChiliAtkB.png",
+	Icon = "weapons/lmn_ChiliAtk1.png",
 	Description = "Breathe fire on two tiles, damage the first target.\nCan self-detonate, blasting all adjacent tiles for double damage, and damaging self.",
 	Class = "TechnoVek",
 	Explosion = "",
