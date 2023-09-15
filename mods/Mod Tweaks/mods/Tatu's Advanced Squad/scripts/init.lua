@@ -15,51 +15,174 @@ function mod:init()
     --------------------
     -- Starfish Mech ---
     --------------------
-    local Nico_twStarfishMech = options["Nico_twStarfishMech"].value
-    if Nico_twStarfishMech==1 then      
-        -- locate our mech assets.
+        local Nico_twStarfishMech = options["Nico_twStarfishMech"].value
+        if Nico_twStarfishMech==1 then
+            -- locate our mech assets.
 
-        local starfishPath = path .."img/mech_starfish/"
+            local starfishPath = path .."img/mech_starfish/"
 
-        -- make a list of our files.
-        local files = {
-            "tatu_mech_starfish.png",
-            "tatu_mech_starfish_a.png",
-            "tatu_mech_starfish_w.png",
-            "tatu_mech_starfish_broken.png",
-            "tatu_mech_starfish_w_broken.png",
-            "tatu_mech_starfish_ns.png",
-        }
+            -- make a list of our files.
+            local files = {
+                "tatu_mech_starfish.png",
+                "tatu_mech_starfish_a.png",
+                "tatu_mech_starfish_w.png",
+                "tatu_mech_starfish_broken.png",
+                "tatu_mech_starfish_w_broken.png",
+                "tatu_mech_starfish_ns.png",
+            }
 
-        -- iterate our files and add the assets so the game can find them.
-        for _, file in ipairs(files) do
-            modApi:appendAsset("img/units/player/".. file, starfishPath .. file)
+            -- iterate our files and add the assets so the game can find them.
+            for _, file in ipairs(files) do
+                modApi:appendAsset("img/units/player/".. file, starfishPath .. file)
+            end
         end
-    end
-    local Nico_twStarfishPalette = options["Nico_twStarfishPalette"].value
-    if Nico_twStarfishPalette==1 then
-        modApi:addPalette{--Tweaked Techno-Starfish
-            ID = "Nico_AdvancedColors",
-            Image="img/units/player/tatu_mech_starfish_ns.png",
-            Name = "Tweaked Starfish",
-            PlateHighlight = {255, 198, 138},	--lights
-            PlateLight     = {255, 187, 131},	--main highlight
-            PlateMid       = {255, 95, 75},	    --main light
-            PlateDark      = {155, 63, 63},		--main mid
-            PlateOutline   = {9, 22, 27},		--main dark
-            BodyHighlight  = {243, 94, 222},	--metal light
-            BodyColor      = {133, 55, 152},	--metal mid
-            PlateShadow    = {56, 34, 78},		--metal dark
-        }
-        tatu_StarfishMech.ImageOffset= modApi:getPaletteImageOffset("Nico_AdvancedColors")
-    end
+        local Nico_twStarfishPalette = options["Nico_twStarfishPalette"].value
+        if Nico_twStarfishPalette==1 then
+            modApi:addPalette{--Tweaked Techno-Starfish
+                ID = "Nico_AdvancedColors",
+                Image="img/units/player/tatu_mech_starfish_ns.png",
+                Name = "Tweaked Starfish",
+                PlateHighlight = {255, 198, 138},	--lights
+                PlateLight     = {255, 187, 131},	--main highlight
+                PlateMid       = {255, 95, 75},	    --main light
+                PlateDark      = {155, 63, 63},		--main mid
+                PlateOutline   = {9, 22, 27},		--main dark
+                BodyHighlight  = {243, 94, 222},	--metal light
+                BodyColor      = {133, 55, 152},	--metal mid
+                PlateShadow    = {56, 34, 78},		--metal dark
+            }
+            tatu_StarfishMech.ImageOffset= modApi:getPaletteImageOffset("Nico_AdvancedColors")
+        end
 
-    if (Nico_twStarfishMech==1 and Nico_twStarfishPalette==0) or (Nico_twStarfishMech==0 and Nico_twStarfishPalette==1) then
-        modApi:appendAsset("img/portraits/pilots/Pilot_tatu_StarfishMech.png",path.."img/portraits/Pilot_tatu_StarfishMech.png")
-    end
+        if (Nico_twStarfishMech==1 and Nico_twStarfishPalette==0) or (Nico_twStarfishMech==0 and Nico_twStarfishPalette==1) then
+            modApi:appendAsset("img/portraits/pilots/Pilot_tatu_StarfishMech.png",path.."img/portraits/Pilot_tatu_StarfishMech.png")
+        end
+
+        --custom Starfish attack sprites
+        local Nico_twStarfishAttack = options["Nico_twStarfishAttack"].value
+        if Nico_twStarfishAttack==1 then
+            -- functions
+            local function tatu_hash(point) return point.x + point.y*10 end
+
+            local function tatu_pos(p1,p2)
+                if p1.y > p2.y and p1.x > p2.x then
+                    return 3
+                elseif p1.y < p2.y and p1.x > p2.x then
+                    return 2
+                elseif p1.y < p2.y and p1.x < p2.x then
+                    return 1
+                elseif p1.y > p2.y and p1.x < p2.x then
+                    return 0
+                end
+            end
+            -- art, icons, animations
+                modApi:appendAsset("img/advanced/effects/Nico_starfish_D.png",mod.resourcePath.."img/advanced/effects/Nico_starfish_D.png")
+                modApi:appendAsset("img/advanced/effects/Nico_starfish_L.png",mod.resourcePath.."img/advanced/effects/Nico_starfish_L.png")
+                modApi:appendAsset("img/advanced/effects/Nico_starfish_R.png",mod.resourcePath.."img/advanced/effects/Nico_starfish_R.png")
+                modApi:appendAsset("img/advanced/effects/Nico_starfish_U.png",mod.resourcePath.."img/advanced/effects/Nico_starfish_U.png")
+                ANIMS.exploNicostarfish_0 = Animation:new{
+                    Image = "advanced/effects/Nico_starfish_R.png",
+                    NumFrames = 7,
+                    Time = 0.1,
+                    PosX = -35,
+                    PosY = -1,}
+                ANIMS.exploNicostarfish_1 = ANIMS.exploNicostarfish_0:new{
+                    Image = "advanced/effects/Nico_starfish_D.png",
+                    PosX = -10,
+                    PosY = -3}
+                ANIMS.exploNicostarfish_2 = ANIMS.exploNicostarfish_0:new{
+                    Image = "advanced/effects/Nico_starfish_L.png",
+                    PosX = 5,
+                    PosY = -1,}
+                ANIMS.exploNicostarfish_3 = ANIMS.exploNicostarfish_0:new{
+                    Image = "advanced/effects/Nico_starfish_U.png",
+                    PosX = -6,
+                    PosY = 19}
+            function tatu_StarfishAttack:GetSkillEffect(p1, p2)
+                local ret = SkillEffect()
+                local dist = p1:Manhattan(p2)
+                local pList = {}
+                
+                -- 1st target
+                if dist < 2 then
+                    dir = GetDirection(p2 - p1)
+                    pA = p2 + DIR_VECTORS[(dir+1)%4]
+                    pB = p2 + DIR_VECTORS[(dir-1)%4]
+                    if Board:IsValid(pA) then pList[tatu_hash(pA)] = pA end
+                    if Board:IsValid(pB) then pList[tatu_hash(pB)] = pB end
+                else
+                    pList[tatu_hash(p2)] = p2
+                end
+                
+                -- add damage
+                for i,p in pairs(pList) do
+                    local damage = SpaceDamage(p,self.Damage)
+                    damage.sAnimation = "exploNicostarfish_"..tatu_pos(p1,p)
+                    ret:AddDamage(damage)
+                end
+                
+                return ret
+            end
+            
+            function tatu_StarfishAttack:GetFinalEffect(p1, p2, p3)
+                local ret = SkillEffect()
+                local dist = p1:Manhattan(p2)
+                local dist2 = p1:Manhattan(p3)
+                local pList = {}
+                
+                -- 1st target
+                if dist < 2 then
+                    dir = GetDirection(p2 - p1)
+                    pA = p2 + DIR_VECTORS[(dir+1)%4]
+                    pB = p2 + DIR_VECTORS[(dir-1)%4]
+                    if Board:IsValid(pA) then pList[tatu_hash(pA)] = pA end
+                    if Board:IsValid(pB) then pList[tatu_hash(pB)] = pB end
+                else
+                    pList[tatu_hash(p2)] = p2
+                end
+                
+                -- 2nd target
+                if p3 ~= p1 then
+                    if dist2 < 2 then
+                        dir = GetDirection(p3 - p1)
+                        pA = p3 + DIR_VECTORS[(dir+1)%4]
+                        pB = p3 + DIR_VECTORS[(dir-1)%4]
+                        if Board:IsValid(pA) then pList[tatu_hash(pA)] = pA end
+                        if Board:IsValid(pB) then pList[tatu_hash(pB)] = pB end
+                    else
+                        pList[tatu_hash(p3)] = p3
+                    end
+                end
+                
+                -- add damage
+                for i,p in pairs(pList) do
+                    local damage = SpaceDamage(p,self.Damage)
+                    damage.sAnimation = "exploNicostarfish_"..tatu_pos(p1,p)
+                    ret:AddDamage(damage)
+                end
+                
+                return ret
+            end
+        end
     --------------------
     -- Gastropod Mech ---
     --------------------
+        local Nico_twGastropodMech = options["Nico_twGastropodMech"].value
+        if Nico_twGastropodMech==1 then
+            -- locate our mech assets.
+            local gastropodPath = path .."img/mech_gastropod/"
+
+            -- make a list of our files.
+            local files = {
+                "tatu_mech_gastropod.png",
+                "tatu_mech_gastropod_a.png",
+                "tatu_mech_gastropod_ns.png",
+            }
+            -- iterate our files and add the assets so the game can find them.
+            for _, file in ipairs(files) do
+                modApi:appendAsset("img/units/player/".. file, gastropodPath .. file)
+            end
+        end
         local Nico_Weapon_Gastropod = options["Nico_Weapon_Gastropod"].value
         if Nico_Weapon_Gastropod==1 then
             --new weapon icon
@@ -101,11 +224,16 @@ function mod:init()
                     ret:AddCharge(Board:GetSimplePath(p1, endSelf), FULL_DELAY)	
                 end
 
-            return ret
+                return ret
+            end
         end
-        -------------------
-        -- Spore Spawner --
-        -------------------
+    -------------------
+    -- Spore Spawner --
+    -------------------
+        local Nico_Movement_Plasmodia = options["Nico_Movement_Plasmodia"].value
+        if Nico_Movement_Plasmodia==1 then
+            tatu_PlasmodiaMech.MoveSpeed = 3
+        end
         local Nico_Weapon_Plasmodia = options["Nico_Weapon_Plasmodia"].value
         if Nico_Weapon_Plasmodia==1 then
             function tatu_PlasmodiaAttack:GetTargetArea(point)
@@ -117,7 +245,7 @@ function mod:init()
                         if not Board:IsValid(curr) then
                             break
                         end
-    
+
                         if not self.OnlyEmpty or not Board:IsBlocked(curr,PATH_GROUND) then
                             ret:push_back(curr)
                         end
@@ -127,127 +255,14 @@ function mod:init()
                 return ret
             end
         end
-    end
-
-    --custom Starfish attack sprites
-    local Nico_twStarfishAttack = options["Nico_twStarfishAttack"].value
-    if Nico_twStarfishAttack==1 then
-        -- functions
-        local function tatu_hash(point) return point.x + point.y*10 end
-
-        local function tatu_pos(p1,p2)
-            if p1.y > p2.y and p1.x > p2.x then
-                return 3
-            elseif p1.y < p2.y and p1.x > p2.x then
-                return 2
-            elseif p1.y < p2.y and p1.x < p2.x then
-                return 1
-            elseif p1.y > p2.y and p1.x < p2.x then
-                return 0
-            end
-        end
-        	-- art, icons, animations
-            modApi:appendAsset("img/advanced/effects/Nico_starfish_D.png",mod.resourcePath.."img/advanced/effects/Nico_starfish_D.png")
-            modApi:appendAsset("img/advanced/effects/Nico_starfish_L.png",mod.resourcePath.."img/advanced/effects/Nico_starfish_L.png")
-            modApi:appendAsset("img/advanced/effects/Nico_starfish_R.png",mod.resourcePath.."img/advanced/effects/Nico_starfish_R.png")
-            modApi:appendAsset("img/advanced/effects/Nico_starfish_U.png",mod.resourcePath.."img/advanced/effects/Nico_starfish_U.png")
-            ANIMS.exploNicostarfish_0 = Animation:new{
-                Image = "advanced/effects/Nico_starfish_R.png",
-                NumFrames = 7,
-                Time = 0.1,
-                PosX = -35,
-                PosY = -1,
-            }
-            ANIMS.exploNicostarfish_1 = ANIMS.exploNicostarfish_0:new{
-                Image = "advanced/effects/Nico_starfish_D.png",
-                PosX = -10,
-                PosY = -3
-            }
-            ANIMS.exploNicostarfish_2 = ANIMS.exploNicostarfish_0:new{
-                Image = "advanced/effects/Nico_starfish_L.png",
-                PosX = 5,
-                PosY = -1,
-            }
-            ANIMS.exploNicostarfish_3 = ANIMS.exploNicostarfish_0:new{
-                Image = "advanced/effects/Nico_starfish_U.png",
-                PosX = -6,
-                PosY = 19
-            }
-        function tatu_StarfishAttack:GetSkillEffect(p1, p2)
-            local ret = SkillEffect()
-            local dist = p1:Manhattan(p2)
-            local pList = {}
-            
-            -- 1st target
-            if dist < 2 then
-                dir = GetDirection(p2 - p1)
-                pA = p2 + DIR_VECTORS[(dir+1)%4]
-                pB = p2 + DIR_VECTORS[(dir-1)%4]
-                if Board:IsValid(pA) then pList[tatu_hash(pA)] = pA end
-                if Board:IsValid(pB) then pList[tatu_hash(pB)] = pB end
-            else
-                pList[tatu_hash(p2)] = p2
-            end
-            
-            -- add damage
-            for i,p in pairs(pList) do
-                local damage = SpaceDamage(p,self.Damage)
-                damage.sAnimation = "exploNicostarfish_"..tatu_pos(p1,p)
-                ret:AddDamage(damage)
-            end
-            
-            return ret
-        end
-        
-        function tatu_StarfishAttack:GetFinalEffect(p1, p2, p3)
-            local ret = SkillEffect()
-            local dist = p1:Manhattan(p2)
-            local dist2 = p1:Manhattan(p3)
-            local pList = {}
-            
-            -- 1st target
-            if dist < 2 then
-                dir = GetDirection(p2 - p1)
-                pA = p2 + DIR_VECTORS[(dir+1)%4]
-                pB = p2 + DIR_VECTORS[(dir-1)%4]
-                if Board:IsValid(pA) then pList[tatu_hash(pA)] = pA end
-                if Board:IsValid(pB) then pList[tatu_hash(pB)] = pB end
-            else
-                pList[tatu_hash(p2)] = p2
-            end
-            
-            -- 2nd target
-            if p3 ~= p1 then
-                if dist2 < 2 then
-                    dir = GetDirection(p3 - p1)
-                    pA = p3 + DIR_VECTORS[(dir+1)%4]
-                    pB = p3 + DIR_VECTORS[(dir-1)%4]
-                    if Board:IsValid(pA) then pList[tatu_hash(pA)] = pA end
-                    if Board:IsValid(pB) then pList[tatu_hash(pB)] = pB end
-                else
-                    pList[tatu_hash(p3)] = p3
-                end
-            end
-            
-            -- add damage
-            for i,p in pairs(pList) do
-                local damage = SpaceDamage(p,self.Damage)
-                damage.sAnimation = "exploNicostarfish_"..tatu_pos(p1,p)
-                ret:AddDamage(damage)
-            end
-            
-            return ret
-        end
-    end
-
     --adds the weapons to the Weapon Deck
-    local Nico_tw_AD_weapon_deck = options["Nico_tw_AD_weapon_deck"].value
+        local Nico_tw_AD_weapon_deck = options["Nico_tw_AD_weapon_deck"].value
 
-    if Nico_tw_AD_weapon_deck==0 then
-        modApi:addWeaponDrop("tatu_GastropodAttack")
-        modApi:addWeaponDrop("tatu_PlasmodiaAttack")
-        modApi:addWeaponDrop("tatu_StarfishAttack")
-    end
+        if Nico_tw_AD_weapon_deck==0 then
+            modApi:addWeaponDrop("tatu_GastropodAttack")
+            modApi:addWeaponDrop("tatu_PlasmodiaAttack")
+            modApi:addWeaponDrop("tatu_StarfishAttack")
+        end
 end
 
 function mod:metadata()--Don't make any changes to resources in metadata. metadata runs regardless of if your mod is enabled or not.
@@ -281,7 +296,7 @@ function mod:metadata()--Don't make any changes to resources in metadata. metada
                 value = 1
             }
         )
-    --Tweaked Vextra SS's sprites
+    --Buffed Spore Launcher
         modApi:addGenerationOption(
             "Nico_Weapon_Plasmodia", "Tweaked Techno-Plasmodia's Weapon",
             "Buffs the Spore Spawner by reducing the amount of tiles it needs to shoot a Techno-Spore.\n(It works better if `Tweaked Techno-Gastropod's Projectile.` is on `Tweaked Sprites`\nREQUIRES RESTART TO TAKE EFFECT!",
@@ -291,7 +306,27 @@ function mod:metadata()--Don't make any changes to resources in metadata. metada
                 value = 1
             }
         )
-    --Tweaked Vextra SS's sprites
+    --Buffed Spore Launcher
+        modApi:addGenerationOption(
+            "Nico_Movement_Plasmodia", "Tweaked Techno-Plasmodia's Movement",
+            "Buffs the movement of the Techno-Plasmodia from 2 to 3.\nREQUIRES RESTART TO TAKE EFFECT!",
+            {
+                strings = { "No Buff.", "Buff."},
+                values = { 0, 1},
+                value = 1
+            }
+        )
+    --Tweaked Sprites for Techno-Gastropod
+        modApi:addGenerationOption(
+            "Nico_twGastropodMech", "Tweaked Techno-Gastropod sprites",
+            "Palette swaps the colors of the Techno-Gastropod's sprites to have angry eyes, like the Gastropod Leader.\nREQUIRES RESTART TO TAKE EFFECT!",
+            {
+                strings = { "Base Sprites.", "Tweaked Sprites."},
+                values = { 0, 1},
+                value = 1
+            }
+        )
+    --Tweaked Techno Gaspropod's weapon icon
         modApi:addGenerationOption(
             "Nico_Weapon_Gastropod", "Tweaked Techno-Gastropod's Weapon Icon",
             "Adds a new weapon icon for the Techno-Gastropod's weapon.\n(It works better if `Tweaked Techno-Gastropod's Projectile.` is on `Tweaked Sprites`\nREQUIRES RESTART TO TAKE EFFECT!",
@@ -301,7 +336,7 @@ function mod:metadata()--Don't make any changes to resources in metadata. metada
                 value = 1
             }
         )
-    --Tweaked Vextra SS's sprites
+    --Tweaked Techno-Gastropod's Hook
         modApi:addGenerationOption(
             "Nico_Hook_Gastropod", "Tweaked Techno-Gastropod's Projectile.",
             "Adds a custom projectile for the Techno-Gastropod's weapon.\nREQUIRES RESTART TO TAKE EFFECT!",
