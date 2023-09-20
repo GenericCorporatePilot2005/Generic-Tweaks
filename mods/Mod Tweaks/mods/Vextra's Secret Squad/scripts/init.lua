@@ -123,12 +123,8 @@ function mod:load(options, version)
                 Damage = 3,
             }
     
-            DNT_SS_AcridSpray_A_Tip = DNT_SS_AcridSpray_A_Tip:new{
-                FartRange = 4,
-            }
-            DNT_SS_AcridSpray_AB_Tip = DNT_SS_AcridSpray_A_Tip:new{
-                Damage = 3,
-            }
+            DNT_SS_AcridSpray_A_Tip.FartRange = 4
+            DNT_SS_AcridSpray_AB_Tip.Damage = 3
             function DNT_SS_AcridSpray:GetSkillEffect(p1,p2)
                 local ret = SkillEffect()
                 local dir = GetDirection(p2 - p1)
@@ -180,25 +176,9 @@ function mod:load(options, version)
         local opStinkbugBoss= options["Nico_Boss_Stinkbug"].value
 
         if opStinkbugBoss==1 then
-            DNT_StinkbugAtkBoss = DNT_StinkbugAtkBoss:new {
-                Name = "Abhorrent Spray",
-                Description = "Prepares to attack while surrounding itself with short-lived stink clouds.",
-                Damage = 3,
-                FartRange = 8,
-                CustomTipImage = "DNT_StinkbugAtkBoss_Tip",
-            }
+            DNT_StinkbugAtkBoss.FartRange = 8
 
-            DNT_StinkbugAtkBoss_Tip = DNT_StinkbugAtkBoss_Tip:new {
-                Damage = DNT_StinkbugAtkBoss.Damage,
-                FartRange = 4,
-                TipImage = {
-                    Unit = Point(2,2),
-                    Target = Point(2,1),
-                    Enemy = Point(1,2),
-                    Building = Point(2,1),
-                    CustomPawn = "DNT_StinkbugBoss",
-                }
-            }
+            DNT_StinkbugAtkBoss_Tip.FartRange = 4
             local function IsTipImage()
                 return Board:GetSize() == Point(6,6)
             end

@@ -65,13 +65,13 @@ function mod:init()
 				modApi:appendAsset("img/units/player/vek_hornet_w_broken.png",mechPath.."vek_hornet3_w_broken.png")
 		end
         local Nico_TScarab_sprites = options["Nico_TScarab_sprites"].value
-    	if (Nico_TScarab_sprites==1) or (Nico_TScarab_sprites==2) then
+    	if Nico_TScarab_sprites==1 then
 			--normal scarab
 				modApi:appendAsset("img/units/player/vek_scarab.png",mechPath.."vek_scarab.png")
 				modApi:appendAsset("img/units/player/vek_scarab_a.png",mechPath.."vek_scarab_a.png")
 				modApi:appendAsset("img/units/player/vek_scarab_w.png",mechPath.."vek_scarab_w.png")
 				modApi:appendAsset("img/units/player/vek_scarab_ns.png",mechPath.."vek_scarab_ns.png")
-		elseif Nico_TScarab_sprites==3 then
+		elseif Nico_TScarab_sprites==2 then
 			--leader scarab
 				modApi:appendAsset("img/units/player/vek_scarab.png",mechPath.."vek_scarab2.png")
 				modApi:appendAsset("img/units/player/vek_scarab_a.png",mechPath.."vek_scarab2_a.png")
@@ -96,12 +96,13 @@ function mod:init()
 	--Palettes
 	modApi:appendAsset("img/units/player/vek_beetle1.png", mod.resourcePath .."img/units/player/vek_beetle1.png")
 	modApi:appendAsset("img/units/player/vek_beetle3.png", mod.resourcePath .."img/units/player/vek_beetle3.png")
-	modApi:appendAsset("img/units/player/scarab_palette.png", mod.resourcePath .."img/units/player/scarab_palette.png")
+	modApi:appendAsset("img/units/player/scarab_palette.png", mod.resourcePath .."img/units/player/vek_scarab_ns.png")
+	modApi:appendAsset("img/units/player/scarab_palette2.png", mod.resourcePath .."img/units/player/vek_scarab2_ns.png")
 	modApi:appendAsset("img/units/player/vek_beetle3.png", mod.resourcePath .."img/units/player/vek_beetle3.png")
 		modApi:addPalette({
 			ID = "Nico_Palette_Vek",
 			Image="img/units/player/vek_beetle1.png",
-			Name = "Normal Vek",
+			Name = "Normal Hornet & Beetle",
 			PlateHighlight = {255, 226, 171},
 			PlateLight     = {200, 156, 88},
 			PlateMid       = {121, 83, 76},
@@ -114,7 +115,7 @@ function mod:init()
 		modApi:addPalette({
 			ID = "Nico_Palette_Vek_Boss",
 			Image="img/units/player/vek_beetle3.png",
-			Name = "Boss Vek Copper",
+			Name = "Leader Hornet & Beetle",
 			PlateHighlight = {255, 197, 86},
 			PlateLight     = {243, 94, 222},
 			PlateMid       = {133, 55, 152},
@@ -127,7 +128,7 @@ function mod:init()
 		modApi:addPalette({
 			ID = "Nico_Palette_Scarab1",
 			Image="units/player/scarab_palette.png",
-			Name = "Vek Blue",
+			Name = "Normal Scarab",
 			PlateHighlight = {255, 226, 171},
 			PlateLight     = {200, 156, 88},
 			PlateMid       = {121, 83, 76},
@@ -139,8 +140,8 @@ function mod:init()
 		})
 		modApi:addPalette({
 			ID = "Nico_Palette_Scarab2",
-			Name = "Secret Squad's Scarab",
-			Image = "units/player/vek_scarab_ns.png",
+			Name = "Alpha Scarab",
+			Image = "units/player/scarab_palette.png",
 			PlateHighlight = {255, 197, 86},
 			PlateLight     = {139, 121, 164},
 			PlateMid       = {85, 88, 112},
@@ -152,8 +153,8 @@ function mod:init()
 		})
 		modApi:addPalette({
 			ID = "Nico_Palette_Scarab3",
-			Name = "Boss Vek Gold",
-			Image = "units/player/vek_scarab_ns.png",
+			Name = "Leader Scarab",
+			Image = "units/player/scarab_palette2.png",
 			PlateHighlight = {255, 198, 138},
 			PlateLight     = {243, 94, 222},
 			PlateMid       = {133, 55, 152},
@@ -239,8 +240,8 @@ function mod:metadata()--Don't make any changes to resources in metadata. metada
 		"Nico_TScarab_sprites", "Tweaked Techno-Scarab sprites",
 		"What the Sprites of the Techno-Scarab will be.\nREQUIRES RESTART TO TAKE EFFECT!",
 		{
-			strings = { "Squad's Default Sprites.", "Normal Vek Sprite", "Tweaked Alpha Vek Sprites", "Leader Vek Sprite"},
-			values = { 0, 1, 2, 3},
+			strings = { "Squad's Default Sprites.", "Tweaked Sprites", "Leader Vek Sprite"},
+			values = { 0, 1, 2},
 			value = 2
 		}
 	)
@@ -276,7 +277,7 @@ function mod:metadata()--Don't make any changes to resources in metadata. metada
 	)
 end
 
-function mod:load( options, version)
+function mod:load(options, version)
 end
 
 return mod

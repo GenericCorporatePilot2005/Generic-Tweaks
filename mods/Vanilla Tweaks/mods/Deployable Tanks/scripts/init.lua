@@ -51,10 +51,10 @@ function mod:init()
         modApi:appendAsset("img/units/player/Nico_tankacida.png", mod.resourcePath .."img/units/player/Nico_tankacida.png")
         modApi:appendAsset("img/units/player/Nico_tankacid_ns.png", mod.resourcePath .."img/units/player/Nico_tankacid_ns.png")
         local a=ANIMS
-            a.Nico_Tankacid = 	a.MechUnit:new{ Image = "units/player/Nico_tankacid.png", PosX = -15, PosY = 4 }
+            a.Nico_Tankacid =  a.MechUnit:new{ Image = "units/player/Nico_tankacid.png", PosX = -15, PosY = 4 }
             a.Nico_Tankacida = a.MechUnit:new{ Image = "units/player/Nico_tankacida.png", PosX = -15, PosY = 4, NumFrames = 2 }
             a.Nico_Tankacidd = a.Nico_Tankacid:new{ Image = "units/player/Nico_tankacid_death.png", PosX = -21, PosY = 3, NumFrames = 11, Time = 0.14, Loop = false }
-            a.Nico_Tankacid_ns  = a.MechIcon:new{ Image = "units/player/Nico_tankacid_ns.png"}
+            a.Nico_Tankacid_ns=a.MechIcon:new{ Image = "units/player/Nico_tankacid_ns.png"}
         Deploy_AcidTank.Image = "Nico_Tankacid"
         Deploy_AcidTank.ImageOffset = 0
         function DeploySkill_AcidTank:GetSkillEffect(p1, p2)	
@@ -79,7 +79,7 @@ function mod:init()
             a.Nico_tankpull1 = 	a.MechUnit:new{ Image = "units/player/Nico_tankpull1.png", PosX = -16, PosY = 3 }
             a.Nico_tankpull1a = a.MechUnit:new{ Image = "units/player/Nico_tankpull1a.png", PosX = -16, PosY = 2, NumFrames = 2 }
             a.Nico_tankpull1d = a.Nico_tankpull1:new{ Image = "units/player/Nico_tankpull1_death.png", PosX = -20, PosY = -3, NumFrames = 11, Time = 0.14, Loop = false }
-            a.Nico_tankpull1_ns  = a.MechIcon:new{ Image = "units/player/Nico_tankpull1_ns.png"}
+            a.Nico_tankpull1_ns=a.MechIcon:new{ Image = "units/player/Nico_tankpull1_ns.png"}
             Deploy_PullTank.Image = "Nico_tankpull1"
             Deploy_PullTank.ImageOffset = 0
         function DeploySkill_PullTank:GetSkillEffect(p1, p2)	
@@ -102,7 +102,7 @@ function mod:init()
             a.Nico_tankpull2 = 	a.MechUnit:new{ Image = "units/player/Nico_tankpull2.png", PosX = -14, PosY = -3, }
             a.Nico_tankpull2a = a.MechUnit:new{ Image = "units/player/Nico_tankpull2a.png", PosX = -14, PosY = -3, NumFrames = 4 }
             a.Nico_tankpull2d = a.Nico_tankpull2:new{ Image = "units/player/Nico_tankpull2_death.png", PosX = -20, PosY = -3, NumFrames = 11, Time = 0.14, Loop = false }
-            a.Nico_tankpull2_ns  = a.MechIcon:new{ Image = "units/player/Nico_tankpull2_ns.png"}
+            a.Nico_tankpull2_ns=a.MechIcon:new{ Image = "units/player/Nico_tankpull2_ns.png"}
             Deploy_PullTankB.Image = "Nico_tankpull2"
             Deploy_PullTankB.ImageOffset = 0
             Deploy_PullTankAB = Deploy_PullTankB:new{Health = 3}
@@ -125,12 +125,12 @@ function mod:init()
         modApi:appendAsset("img/units/player/Nico_tankshielda.png", mod.resourcePath .."img/units/player/Nico_tankshielda.png")
         modApi:appendAsset("img/units/player/Nico_tankshield_ns.png", mod.resourcePath .."img/units/player/Nico_tankshield_ns.png")
         local a=ANIMS
-            a.Nico_tankshield = a.MechUnit:new{ Image = "units/player/Nico_tankshield.png", PosX = -15, PosY = 9}
+            a.Nico_tankshield =  a.MechUnit:new{ Image = "units/player/Nico_tankshield.png", PosX = -15, PosY = 9}
             a.Nico_tankshielda = a.MechUnit:new{ Image = "units/player/Nico_tankshielda.png", PosX = -15, PosY = 8, NumFrames = 2}
             a.Nico_tankshieldd = a.Nico_tankshield:new{ Image = "units/player/Nico_tankshield_death.png", PosX = -21, PosY = 0, NumFrames = 11, Time = 0.14, Loop = false }
-            a.Nico_tankshield_ns  = a.MechIcon:new{ Image = "units/player/Nico_tankshield_ns.png"}
-            Deploy_ShieldTank.Image = "Nico_tankshield"
-                Deploy_ShieldTank.ImageOffset = 0
+            a.Nico_tankshield_ns=a.MechIcon:new{ Image = "units/player/Nico_tankshield_ns.png"}
+        Deploy_ShieldTank.Image = "Nico_tankshield"
+        Deploy_ShieldTank.ImageOffset = 0
         function DeploySkill_ShieldTank:GetSkillEffect(p1, p2)	
             local ret = SkillEffect()
             local damage = SpaceDamage(p2,0)
@@ -140,6 +140,16 @@ function mod:init()
             -- change tank color
                 ret:AddScript(string.format("_G[%q].ImageOffset = Board:GetPawn(%s):GetImageOffset()",self.Deployed,p1:GetString()))
                 ret:AddAnimation(damage.loc,"ExploRepulse1", ANIM_NO_DELAY)
+            return ret
+        end
+        function DeploySkill_PullTank_B:GetTargetArea(point)
+            local ret = PointList()
+            for i = DIR_START, DIR_END do
+                for k = 2, 7 do
+                    local curr = DIR_VECTORS[i]*k + point
+                    if (not Board:IsPawnSpace(curr)) and (not Board:IsBlocked(curr, PATH_FLYER)) then ret:push_back(DIR_VECTORS[i]*k + point) end
+                end
+            end
             return ret
         end
     end
