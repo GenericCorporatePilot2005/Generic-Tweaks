@@ -42,9 +42,9 @@ function mod:init()
                 "DNT_stinkbug_mech_death.png",
                 "DNT_stinkbug_mech_ns.png",
             }
-        local mechPath = path .."img/units/player/"
-        for _, file in ipairs(files) do
-            modApi:appendAsset("img/units/player/".. file, mechPath .. file)
+            local mechPath = path .."img/units/player/"
+            for _, file in ipairs(files) do
+                modApi:appendAsset("img/units/player/".. file, mechPath .. file)
             end
         end
 end
