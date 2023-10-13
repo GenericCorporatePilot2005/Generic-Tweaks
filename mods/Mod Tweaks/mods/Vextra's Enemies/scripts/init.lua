@@ -1,6 +1,6 @@
 local mod = {
 	id = "Nico_Vextra_enemy",
-    name = "Vextra Enemy Portraits",
+    name = "Vextra's Enemy Portraits",
     description="Changes almost all enemy portraits' backgrounds.",
 	modApiVersion = "2.8.2",
 	gameVersion = "1.2.83",
@@ -18,6 +18,7 @@ function mod:init()
         "DNT_AntlionBoss.png",
         "DNT_Cockroach2.png",
         "DNT_CockroachBoss.png",
+        "DNT_Dragonfly1.png",
         "DNT_Dragonfly2.png",
         "DNT_DragonflyBoss.png",
         "DNT_Fly2.png",
@@ -36,6 +37,7 @@ function mod:init()
         "DNT_Reactive1.png",
         "DNT_Silkworm2.png",
         "DNT_SilkwormBoss.png",
+        "DNT_Stinkbug1.png",
         "DNT_Stinkbug2.png",
         "DNT_StinkbugBoss.png",
         "DNT_Termites2.png",

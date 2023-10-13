@@ -22,7 +22,6 @@ function mod:init()
             local dir = GetDirection(p2 - p1)
 
             local damage = SpaceDamage(p2, self.Damage, dir)
-            damage.sAnimation = "explospear1_"..dir
             ret:AddMelee(p1, damage)
             
             ret:AddDamage(SpaceDamage(p1,1))

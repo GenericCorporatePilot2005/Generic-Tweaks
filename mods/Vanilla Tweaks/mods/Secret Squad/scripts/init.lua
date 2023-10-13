@@ -8,7 +8,8 @@ local mod = {
 	description="Adds some small changes to the squad that got me hooked into Cyborg-Class Mechs.\nIt's time to repay my debt.",
 	requirements = {},
 	dependencies = { --This requests modApiExt from the mod loader
-		modApiExt = "1.17", --We can get this by using the variable `modapiext`
+		modApiExt = "1.17",
+		"Nico_Tweaks"
 	},
 	modApiVersion = "2.8.3",
 	icon = "img/icon.png"
@@ -92,86 +93,16 @@ function mod:init()
 
 	--Beetle's smoke immunity
 		BeetleMech.IgnoreSmoke=true
-
 	--Palettes
-	modApi:appendAsset("img/units/player/vek_beetle1.png", mod.resourcePath .."img/units/player/vek_beetle1.png")
-	modApi:appendAsset("img/units/player/vek_beetle3.png", mod.resourcePath .."img/units/player/vek_beetle3.png")
-	modApi:appendAsset("img/units/player/scarab_palette.png", mod.resourcePath .."img/units/player/vek_scarab_ns.png")
-	modApi:appendAsset("img/units/player/scarab_palette2.png", mod.resourcePath .."img/units/player/vek_scarab2_ns.png")
-	modApi:appendAsset("img/units/player/vek_beetle3.png", mod.resourcePath .."img/units/player/vek_beetle3.png")
-		modApi:addPalette({
-			ID = "Nico_Palette_Vek",
-			Image="img/units/player/vek_beetle1.png",
-			Name = "Normal Hornet & Beetle",
-			PlateHighlight = {255, 226, 171},
-			PlateLight     = {200, 156, 88},
-			PlateMid       = {121, 83, 76},
-			PlateDark      = {47, 37, 53},
-			PlateOutline   = {12, 19, 31},
-			PlateShadow    = {33, 57, 45},
-			BodyColor      = {93, 121, 97},
-			BodyHighlight  = {254, 195, 187},
-		})
-		modApi:addPalette({
-			ID = "Nico_Palette_Vek_Boss",
-			Image="img/units/player/vek_beetle3.png",
-			Name = "Leader Hornet & Beetle",
-			PlateHighlight = {255, 197, 86},
-			PlateLight     = {243, 94, 222},
-			PlateMid       = {133, 55, 152},
-			PlateDark      = {56, 34, 78},
-			PlateOutline   = {22, 9, 10},
-			PlateShadow    = {79, 33, 32},
-			BodyColor      = {255, 95, 75},
-			BodyHighlight  = {255, 187, 131},
-		})
-		modApi:addPalette({
-			ID = "Nico_Palette_Scarab1",
-			Image="units/player/scarab_palette.png",
-			Name = "Normal Scarab",
-			PlateHighlight = {255, 226, 171},
-			PlateLight     = {200, 156, 88},
-			PlateMid       = {121, 83, 76},
-			PlateDark      = {47, 37, 53},
-			PlateOutline   = {12, 19, 31},
-			PlateShadow    = {58, 74, 128},
-			BodyColor      = {72, 183, 215},
-			BodyHighlight  = {248, 249, 193},
-		})
-		modApi:addPalette({
-			ID = "Nico_Palette_Scarab2",
-			Name = "Alpha Scarab",
-			Image = "units/player/scarab_palette.png",
-			PlateHighlight = {255, 197, 86},
-			PlateLight     = {139, 121, 164},
-			PlateMid       = {85, 88, 112},
-			PlateDark      = {36, 41, 65},
-			PlateOutline   = {9, 22, 27},
-			PlateShadow    = {60, 87, 89},
-			BodyColor      = {79, 146, 107},
-			BodyHighlight  = {206, 212, 135},
-		})
-		modApi:addPalette({
-			ID = "Nico_Palette_Scarab3",
-			Name = "Leader Scarab",
-			Image = "units/player/scarab_palette2.png",
-			PlateHighlight = {255, 198, 138},
-			PlateLight     = {243, 94, 222},
-			PlateMid       = {133, 55, 152},
-			PlateDark      = {56, 34, 78},
-			PlateOutline   = {9, 13, 23},
-			PlateShadow    = {160, 95, 54},
-			BodyColor      = {221, 170, 73},
-			BodyHighlight  = {255, 246, 220},
-		})
-        local Nico_TBeetle_palette = options["Nico_TBeetle_palette"].value
-    	if Nico_TBeetle_palette==1 then
-			modApi:appendAsset("img/portraits/pilots/Pilot_BeetleMech.png", path .."img/portraits/pilots/Pilot_BeetleMech1.png")
-			BeetleMech.ImageOffset = modApi:getPaletteImageOffset("Nico_Palette_Vek")
-		elseif Nico_TBeetle_palette==3 then
-            modApi:appendAsset("img/portraits/pilots/Pilot_BeetleMech.png", path .."img/portraits/pilots/Pilot_BeetleMech3.png")
-			BeetleMech.ImageOffset = modApi:getPaletteImageOffset("Nico_Palette_Vek_Boss")
-		end
+		--beetle
+			local Nico_TBeetle_palette = options["Nico_TBeetle_palette"].value
+			if Nico_TBeetle_palette==1 then
+				modApi:appendAsset("img/portraits/pilots/Pilot_BeetleMech.png", path .."img/portraits/pilots/Pilot_BeetleMech1.png")
+				BeetleMech.ImageOffset = modApi:getPaletteImageOffset("Nico_Palette_Vek")
+			elseif Nico_TBeetle_palette==3 then
+				modApi:appendAsset("img/portraits/pilots/Pilot_BeetleMech.png", path .."img/portraits/pilots/Pilot_BeetleMech3.png")
+				BeetleMech.ImageOffset = modApi:getPaletteImageOffset("Nico_Palette_Vek_Boss")
+			end
 		--hornet
 			local Nico_THornet_palette = options["Nico_THornet_palette"].value
 			if Nico_THornet_palette==1 then
