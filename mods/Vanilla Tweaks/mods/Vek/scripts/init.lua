@@ -11,7 +11,8 @@ local mod = {
 		modApiExt = "1.17", --We can get this by using the variable `modapiext`
 	},
 	modApiVersion = "2.8.3",
-	icon = "img/icon.png"
+	icon = "img/icon.png",
+	enabled=false,
 }
 
 function mod:init()

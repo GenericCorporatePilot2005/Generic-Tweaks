@@ -11,9 +11,9 @@ modApi:addPalette{--base chili
     PlateMid       = {147,63,69},--main light
     PlateDark      = {77,42,41},--main mid
     PlateOutline   = {16,14,14},--main dark
-    PlateShadow    = {47,71,52},--metal dark
-    BodyColor      = {109,159,105},--metal mid
     BodyHighlight  = {177,221,108},--metal light
+    BodyColor      = {109,159,105},--metal mid
+    PlateShadow    = {47,71,52},--metal dark
 }
 modApi:addPalette{--alpha chili
     Image="units/player/chili_palette_2.png",
@@ -24,9 +24,9 @@ modApi:addPalette{--alpha chili
     PlateMid       = {230,105,28},--main light
     PlateDark      = {213,49,29},--main mid
     PlateOutline   = {12,20,32},--main dark
-    PlateShadow    = {49,50,76},--metal dark
-    BodyColor      = {76,86,134},--metal mid
     BodyHighlight  = {110,207,226},--metal light
+    BodyColor      = {76,86,134},--metal mid
+    PlateShadow    = {49,50,76},--metal dark
 }
 modApi:addPalette{--boss chili
     Image="units/player/chili_palette_3.png",
@@ -37,9 +37,9 @@ modApi:addPalette{--boss chili
     PlateMid       = {250,0,0},--main light
     PlateDark      = {145,0,0},--main mid
     PlateOutline   = {12,20,32},--main dark
-    PlateShadow    = {77,42,41},--metal dark
-    BodyColor      = {147,63,69},--metal mid
     BodyHighlight  = {249,81,81},--metal light
+    BodyColor      = {147,63,69},--metal mid
+    PlateShadow    = {77,42,41},--metal dark
 }
 modApi:addPalette{--base puffer
     Image="units/player/puffer_palette.png",
@@ -50,9 +50,9 @@ modApi:addPalette{--base puffer
     PlateMid       = {152,43,94},--main light
     PlateDark      = {83,27,47},--main mid
     PlateOutline   = {12,19,31},--main dark
-    PlateShadow    = {44,43,47},--metal dark
-    BodyColor      = {103,94,97},--metal mid
     BodyHighlight  = {155,135,133},--metal light
+    BodyColor      = {103,94,97},--metal mid
+    PlateShadow    = {44,43,47},--metal dark
 }
 modApi:addPalette{--alpha puffer
     Image="units/player/puffer_palette.png",
@@ -63,9 +63,9 @@ modApi:addPalette{--alpha puffer
     PlateMid       = {52,171,140},--main light
     PlateDark      = {32,93,84},--main mid
     PlateOutline   = {9,22,27},--main dark
-    PlateShadow    = {38,40,50},--metal dark
-    BodyColor      = {80,81,91},--metal mid
     BodyHighlight  = {122,113,135},--metal light
+    BodyColor      = {80,81,91},--metal mid
+    PlateShadow    = {38,40,50},--metal dark
 }
 modApi:addPalette{--base chomper
     Image="units/player/chomper_palette_1.png",
@@ -76,9 +76,9 @@ modApi:addPalette{--base chomper
     PlateMid       = {76,130,79},--main light
     PlateDark      = {49,74,54},--main mid
     PlateOutline   = {27,35,25},--main dark
-    PlateShadow    = {49,74,54},--metal dark
-    BodyColor      = {76,130,79},--metal mid
     BodyHighlight  = {177,221,108},--metal light
+    BodyColor      = {76,130,79},--metal mid
+    PlateShadow    = {49,74,54},--metal dark
 }
 modApi:addPalette{--alpha chomper
     Image="units/player/chomper_palette_2.png",
@@ -89,9 +89,9 @@ modApi:addPalette{--alpha chomper
     PlateMid       = {76,86,134},--main light
     PlateDark      = {49,50,76},--main mid
     PlateOutline   = {25,30,36},--main dark
-    PlateShadow    = {49,50,76},--metal dark
-    BodyColor      = {76,86,134},--metal mid
     BodyHighlight  = {110,207,226},--metal light
+    BodyColor      = {76,86,134},--metal mid
+    PlateShadow    = {49,50,76},--metal dark
 }
 modApi:addPalette{--boss chomper
     Image="units/player/chomper_palette_3.png",
@@ -102,9 +102,9 @@ modApi:addPalette{--boss chomper
     PlateMid       = {147,63,69},--main light
     PlateDark      = {77,42,41},--main mid
     PlateOutline   = {27,35,25},--main dark
-    PlateShadow    = {8,16,16},--metal dark
-    BodyColor      = {183,85,31},--metal mid
     BodyHighlight  = {210,114,36},--metal light
+    BodyColor      = {183,85,31},--metal mid
+    PlateShadow    = {8,16,16},--metal dark
 }
 
 local mod = modApi:getCurrentMod()

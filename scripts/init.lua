@@ -5,7 +5,9 @@ local mod = {
 	description = "A collection of small tweaks for several mods that were not made by me.\n(The tweaks aren't generic, I am.).\n(note, Generic's Tweaks will add some new palettes, this have the purpose of allowing certain mods to work in a more optimal way)",
 	icon = "img/icon.png",
 	submodFolders = {"mods/"},
-	version = "1.93",}
+	version = "1.93",
+	enabled=false,
+}
 
 function mod:init()
 	--Palettes

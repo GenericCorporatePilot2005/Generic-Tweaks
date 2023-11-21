@@ -8,6 +8,7 @@ local mod = {
 	icon = "img/icon.png",
 	dependencies = {"hedera_voidscrapers"},
 	libs = {},
+	enabled=false,
 }
 function mod:init()
     local path = mod_loader.mods[modApi.currentMod].resourcePath

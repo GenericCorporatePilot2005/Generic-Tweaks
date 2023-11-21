@@ -8,6 +8,7 @@ local mod = {
 	icon = "img/icon.png",
 	dependencies = {"tosx_ZeroDawn"},
 	libs = {},
+	enabled=false,
 }
 function mod:init()
     local path = mod_loader.mods[modApi.currentMod].resourcePath

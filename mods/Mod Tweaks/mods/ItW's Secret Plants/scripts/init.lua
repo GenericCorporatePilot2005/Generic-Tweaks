@@ -8,6 +8,7 @@ local mod = {
 	icon = "icon.png",
 	dependencies = {"lmn_into_the_wild"},
 	libs = {},
+	enabled=false,
 }
 
 function mod:init()

@@ -8,6 +8,7 @@ local mod = {
 	icon = "img/icon.png",
 	dependencies = {"CauldronPilots"},
 	libs = {},
+	enabled=false,
 }
 
 function mod:init()

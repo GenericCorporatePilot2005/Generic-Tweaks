@@ -8,6 +8,7 @@ local mod = {
 	icon = "icon.png",
 	dependencies = {},
 	libs = {},
+	enabled=false,
 }
 
 function mod:init()
@@ -59,6 +60,11 @@ function mod:init()
         modApi:appendAsset("img/advanced/units/player/bombling.png", mod.resourcePath .."img/bombling2.png")
         modApi:appendAsset("img/advanced/units/player/bombling_a.png", mod.resourcePath .."img/bombling2_a.png")
         modApi:appendAsset("img/advanced/units/player/bombling_death.png", mod.resourcePath .."img/bombling2_death.png")
+    elseif Nico_Bomb_Sprites==4 then
+        -- make a list of our files.
+        modApi:appendAsset("img/advanced/units/player/bombling.png", mod.resourcePath .."img/bombling3.png")
+        modApi:appendAsset("img/advanced/units/player/bombling_a.png", mod.resourcePath .."img/bombling3_a.png")
+        modApi:appendAsset("img/advanced/units/player/bombling_death.png", mod.resourcePath .."img/bombling3_death.png")
     end
 end
 function mod:metadata()--Don't make any changes to resources in metadata. metadata runs regardless of if your mod is enabled or not.
@@ -67,8 +73,8 @@ function mod:metadata()--Don't make any changes to resources in metadata. metada
 		"Nico_Bomb_Sprites", "Walking Bomb's Sprites",
 		"What the Sprites of the Walking Bomb will be. REQUIRES RESTART TO TAKE EFFECT!",
 		{
-			strings = { "Metal Legs.", "Plate Legs.", "Frontal Plate legs,Metal Back Legs."},
-			values = { 1, 2, 3 },
+			strings = { "Metal Legs.", "Plate Legs.", "Frontal Plate legs,Metal Back Legs.", "Metal Legs, Plate Body"},
+			values = { 1, 2, 3, 4},
 			value = 1
 		}
 	)

@@ -9,6 +9,7 @@ local mod = {
 	icon = "icon.png",
 	dependencies = {"lmn_flt_pilots"},
 	libs = {},
+	enabled=false,
 }
 
 function mod:init()
