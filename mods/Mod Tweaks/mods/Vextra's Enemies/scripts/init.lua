@@ -8,6 +8,7 @@ local mod = {
 	icon = "img/icon.png",
 	dependencies = {"Djinn_NAH_Tatu_Vextra"},
 	libs = {},
+	enabled=false,
 }
 function mod:init()
     local path = mod_loader.mods[modApi.currentMod].resourcePath
