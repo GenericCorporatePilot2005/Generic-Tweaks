@@ -18,6 +18,9 @@ local mod = {
 function mod:init()
 	Prime_Lightning.FriendlyDamage = false
 	WallMech.MoveSpeed=4
+	modApi:appendAsset("img/units/player/mech_electric.png", mod.resourcePath .."img/units/player/mech_electric.png")
+	modApi:appendAsset("img/units/player/mech_electric_a.png", mod.resourcePath .."img/units/player/mech_electric_a.png")
+	modApi:appendAsset("img/units/player/mech_electric_ns.png", mod.resourcePath .."img/units/player/mech_electric_ns.png")
 	function Prime_Lightning:GetSkillEffect(p1, p2)
 		local ret = SkillEffect()
 		local damage = SpaceDamage(p2,self.Damage)
@@ -36,14 +39,20 @@ function mod:init()
 			if not explored[hash(current)] then
 				explored[hash(current)] = true
 				
-				if Board:IsPawnSpace(current) or (self.Buildings and Board:IsBuilding(current)) or Board:GetTerrain(current) == TERRAIN_WATER or (IsPassiveSkill("Electric_Smoke") and Board:IsSmoke(current)) or Board:IsAcid(current) then
+				if Board:IsPawnSpace(current) or self.Buildings and Board:IsBuilding(current) or Board:GetTerrain(current) == TERRAIN_WATER or Board:GetTerrain(current) == TERRAIN_SAND or Board:GetCustomTile(current) == "ground_rail.png" or Board:GetCustomTile(current) == "ground_rail2.png" or Board:GetCustomTile(current) == "ground_rail3.png" or Board:GetCustomTile(current) == "tosx_mud_0.png" or Board:GetCustomTile(current) == "lmn_ground_geyser.png" or Board:GetCustomTile(current) == "tosx_mission_cableVbreak.png" or Board:GetCustomTile(current) == "tosx_mission_cableHbreak.png" or (IsPassiveSkill("Electric_Smoke") and Board:IsSmoke(current)) or Board:IsAcid(current) then
 				
 					local direction = GetDirection(current - origin[hash(current)])
 					damage.sAnimation = "Lightning_Attack_"..direction
 					damage.loc = current
 					damage.iDamage = (Board:IsBuilding(current) or Board:IsPawnTeam(current, TEAM_PLAYER)) and DAMAGE_ZERO or self.Damage
 					
-					if not self.FriendlyDamage and Board:IsPawnTeam(current, TEAM_PLAYER) then
+					--For Nautilus' tunnels
+					local Tunnel = false
+					if Board:IsPawnSpace(current) and (Board:GetPawn(current):GetType()=="Nautilus_Tunnel_Pawn1_r" or Board:GetPawn(current):GetType()=="Nautilus_Tunnel_Pawn1_l" or Board:GetPawn(current):GetType()=="Nautilus_Tunnel_Pawn2_r" or Board:GetPawn(current):GetType()=="Nautilus_Tunnel_Pawn2_l") then
+						Tunnel = true
+					end
+					
+					if not self.FriendlyDamage and Board:IsPawnSpace(current) and Board:IsPawnTeam(current, TEAM_PLAYER) or Tunnel then
 						damage.iDamage = DAMAGE_ZERO
 					end
 					

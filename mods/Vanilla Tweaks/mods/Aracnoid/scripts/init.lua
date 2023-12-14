@@ -1,14 +1,30 @@
 local mod = {
 	id = "Nico_aracTweaks",
     name = "Aracnoid",
-    description="Adds custom sprites for the aracnoids, makes the palette of the Aracnoid change dinamically to match the palette of the deployer,\nchanges the animation of the attack\nand reduces the self damage from DAMAGE_DEATH to 1.",
+    description = "Adds custom sprites for the aracnoids, makes the palette of the Aracnoid change dinamically to match the palette of the deployer,\nchanges the animation of the attack\nand reduces the self damage from DAMAGE_DEATH to 1.",
 	modApiVersion = "2.8.2",
 	gameVersion = "1.2.83",
-    version="ersion 1.1",
+    version = "ersion 1.1",
 	icon = "img/icon.png",
 	dependencies = {},
 	libs = {},
+	enabled=false,
 }
+
+local function IsShieldGen()
+    local shieldGen = false
+    local foes = extract_table(Board:GetPawns(TEAM_ENEMY))
+    for i,id in pairs(foes) do
+        local pawn = Board:GetPawn(id)
+        if pawn:GetType() == "Shield_Building" then
+            shieldGen = id
+        end
+    end
+    if shieldGen and pawn:GetId() ~= shieldGen then
+        return false
+    end
+    return true
+end
 
 function mod:init()
     --aracnoid
@@ -21,12 +37,33 @@ function mod:init()
         function Ranged_Arachnoid:GetSkillEffect(p1, p2)
             local ret = SkillEffect()
             local dir = GetDirection(p2 - p1)
+
+            local function IsExplosivePsion(p2)
+                -- Psions are inactive in Test Mech.
+                if IsTestMechScenario() then
+                    return false
+                end
+                
+                pawns = extract_table(Board:GetPawns(TEAM_ENEMY))
+                for _, id in ipairs(pawns) do
+                    local pawn = Board:GetPawn(id)
+                    local pawnType = pawn:GetType()
+                    if pawnType.loc ~= p2 and (_G[pawnType].Leader == LEADER_EXPLODE or _G[pawnType].Leader == LEADER_BOSS) then
+                        return false
+                    elseif pawnType.loc == p2 and (_G[pawnType].Leader == LEADER_EXPLODE or _G[pawnType].Leader == LEADER_BOSS) then
+                        return true
+                    end
+                end
+                return false
+            end
             
             ret:AddBounce(p1, 1)
-            
             local damage = SpaceDamage(p2,self.Damage)
             damage.sAnimation = ""
-            damage.bKO_Effect = Board:IsDeadly(damage, Pawn)
+            if Board:IsPawnSpace(damage.loc) and Board:GetPawn(damage.loc):GetType() == "Jelly_Explode1" then
+                LOG("es un Psion volatil")
+            end
+            damage.bKO_Effect = Board:IsPawnSpace(damage.loc) and (Board:IsDeadly(damage, Pawn) and not Board:IsTerrain(damage.loc,TERRAIN_WATER) and not Board:IsTerrain(damage.loc,TERRAIN_LAVA) and not Board:IsTerrain(damage.loc,TERRAIN_HOLE) and not Board:IsCracked(damage.loc) and (not Board:IsTerrain(damage.loc,TERRAIN_ICE) and not Board:IsCracked(damage.loc)) and _G[Board:GetPawn(damage.loc):GetType()].Explodes == false and (Board:GetPawn(damage.loc):GetType() == "Jelly_Explode1" and not IsExplosivePsion(p2)))
             ret:AddArtillery(damage,self.Projectile)
             if damage.bKO_Effect then
                 ret:AddAnimation(damage.loc,"Arachnoide", ANIM_NO_DELAY)
@@ -40,7 +77,7 @@ function mod:init()
                 end
             end
             
-            if Board:IsDeadly(damage, Pawn) then
+            if damage.bKO_Effect then
                 ret:AddSound(self.KOSound)
                 ret:AddDelay(1.1)
                 if Board:GetPawn(p1):GetImageOffset() ~= 10 then       
