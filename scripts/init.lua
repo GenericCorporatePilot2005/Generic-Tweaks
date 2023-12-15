@@ -6,7 +6,6 @@ local mod = {
 	icon = "img/icon.png",
 	submodFolders = {"mods/"},
 	version = "1.93",
-	enabled=false,
 }
 
 function mod:init()
