@@ -4,11 +4,11 @@ local mod = {
 	version = "0",
 	modApiVersion = "2.8.2",
 	gameVersion = "1.2.83",
-	description="A tweaked version of a cyborg squad that I considered needed improvements, this mod aims to give a better experience overall, by giving buffs to mechs and reworks to their weapons, in hopes to make them better; other additions include customizable palettes and sprites.",
+	description = "A tweaked version of a cyborg squad that I considered needed improvements, this mod aims to give a better experience overall, by giving buffs to mechs and reworks to their weapons, in hopes to make them better; other additions include customizable palettes and sprites.",
 	icon = "icon.png",
 	dependencies = {"lmn_into_the_wild"},
 	libs = {},
-	enabled=false,
+	enabled = false,
 }
 
 function mod:init()

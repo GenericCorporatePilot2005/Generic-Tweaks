@@ -60,9 +60,6 @@ function mod:init()
             ret:AddBounce(p1, 1)
             local damage = SpaceDamage(p2,self.Damage)
             damage.sAnimation = ""
-            if Board:IsPawnSpace(damage.loc) and Board:GetPawn(damage.loc):GetType() == "Jelly_Explode1" then
-                LOG("es un Psion volatil")
-            end
             damage.bKO_Effect = Board:IsPawnSpace(damage.loc) and (Board:IsDeadly(damage, Pawn) and not Board:IsTerrain(damage.loc,TERRAIN_WATER) and not Board:IsTerrain(damage.loc,TERRAIN_LAVA) and not Board:IsTerrain(damage.loc,TERRAIN_HOLE) and not Board:IsCracked(damage.loc) and (not Board:IsTerrain(damage.loc,TERRAIN_ICE) and not Board:IsCracked(damage.loc)) and _G[Board:GetPawn(damage.loc):GetType()].Explodes == false and (Board:GetPawn(damage.loc):GetType() == "Jelly_Explode1" and not IsExplosivePsion(p2)))
             ret:AddArtillery(damage,self.Projectile)
             if damage.bKO_Effect then
@@ -83,7 +80,7 @@ function mod:init()
                 if Board:GetPawn(p1):GetImageOffset() ~= 10 then       
                     -- change spider color
                     ret:AddScript(string.format("_G[%q].ImageOffset = Board:GetPawn(%s):GetImageOffset()",self.MyPawn,p1:GetString()))
-                    ret:AddAnimation(damage.loc,"ExploRepulse1", ANIM_NO_DELAY)
+                    ret:AddBounce(damage.loc,1)
                 else
                     DeployUnit_Aracnoid.ImageOffset = 10
                 end

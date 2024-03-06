@@ -33,7 +33,7 @@ function mod:init()
         if Board:GetPawn(p1):GetImageOffset() ~= 9 then
             -- change spider color
                 ret:AddScript(string.format("_G[%q].ImageOffset = Board:GetPawn(%s):GetImageOffset()",self.Deployed,p1:GetString()))
-            ret:AddAnimation(damage.loc,"ExploRepulse1", ANIM_NO_DELAY)
+                ret:AddBounce(damage.loc,1)
         else
             DeployUnit_Bomby.ImageOffset = 9
         end
@@ -49,22 +49,12 @@ function mod:init()
         return ret
     end
 	local options = mod_loader.currentModContent[mod.id].options
-    local Nico_Bomb_Sprites = options["Nico_Bomb_Sprites"].value
-    if Nico_Bomb_Sprites==2 then
+    if options["Nico_Bomb_Sprites"].value ~=0 then
+        local Nico_Bomb_Sprites = options["Nico_Bomb_Sprites"].value
         -- iterate our files and add the assets so the game can find them.
-        modApi:appendAsset("img/advanced/units/player/bombling.png", mod.resourcePath .."img/bombling1.png")
-        modApi:appendAsset("img/advanced/units/player/bombling_a.png", mod.resourcePath .."img/bombling1_a.png")
-        modApi:appendAsset("img/advanced/units/player/bombling_death.png", mod.resourcePath .."img/bombling1_death.png")
-    elseif Nico_Bomb_Sprites==3 then
-        -- make a list of our files.
-        modApi:appendAsset("img/advanced/units/player/bombling.png", mod.resourcePath .."img/bombling2.png")
-        modApi:appendAsset("img/advanced/units/player/bombling_a.png", mod.resourcePath .."img/bombling2_a.png")
-        modApi:appendAsset("img/advanced/units/player/bombling_death.png", mod.resourcePath .."img/bombling2_death.png")
-    elseif Nico_Bomb_Sprites==4 then
-        -- make a list of our files.
-        modApi:appendAsset("img/advanced/units/player/bombling.png", mod.resourcePath .."img/bombling3.png")
-        modApi:appendAsset("img/advanced/units/player/bombling_a.png", mod.resourcePath .."img/bombling3_a.png")
-        modApi:appendAsset("img/advanced/units/player/bombling_death.png", mod.resourcePath .."img/bombling3_death.png")
+            modApi:appendAsset("img/advanced/units/player/bombling.png", mod.resourcePath .."img/bombling"..Nico_Bomb_Sprites..".png")
+            modApi:appendAsset("img/advanced/units/player/bombling_a.png", mod.resourcePath .."img/bombling"..Nico_Bomb_Sprites.."_a.png")
+            modApi:appendAsset("img/advanced/units/player/bombling_death.png", mod.resourcePath .."img/bombling"..Nico_Bomb_Sprites.."_death.png")
     end
 end
 function mod:metadata()--Don't make any changes to resources in metadata. metadata runs regardless of if your mod is enabled or not.
@@ -74,8 +64,8 @@ function mod:metadata()--Don't make any changes to resources in metadata. metada
 		"What the Sprites of the Walking Bomb will be. REQUIRES RESTART TO TAKE EFFECT!",
 		{
 			strings = { "Metal Legs.", "Plate Legs.", "Frontal Plate legs,Metal Back Legs.", "Metal Legs, Plate Body"},
-			values = { 1, 2, 3, 4},
-			value = 1
+			values = { 0, 1, 2, 3},
+			value = 0
 		}
 	)
 end

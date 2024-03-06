@@ -9,7 +9,7 @@ Nico_TW_chili = Prime_Flamethrower:new{
 	PathSize = 2,
 	Damage = 1,
 	Push = 1,
-    kaboom=false,
+    kaboom = false,
 	PowerCost = 0,
 	Upgrades = 2,
 	UpgradeList = { "Jalapeños",  "+1 Damage & Range"  },
@@ -73,8 +73,8 @@ function Nico_TW_chili:GetSkillEffect(p1, p2)
         local push2 = DIR_NONE--(i == distance) and ((direction + 1)% 4)*self.Push or DIR_NONE
         local push3 = DIR_NONE--(i == distance) and ((direction - 1)% 4)*self.Push or DIR_NONE
 		local damage = SpaceDamage(p1 + DIR_VECTORS[direction]*i,0, push)
-        local damage2=SpaceDamage(damage.loc+ DIR_VECTORS[(direction + 1)% 4], 0, push2)
-        local damage3=SpaceDamage(damage.loc+ DIR_VECTORS[(direction - 1)% 4], 0, push3)
+        local damage2 = SpaceDamage(damage.loc + DIR_VECTORS[(direction + 1)% 4], 0, push2)
+        local damage3 = SpaceDamage(damage.loc + DIR_VECTORS[(direction - 1)% 4], 0, push3)
 		if Board:IsPawnSpace(damage.loc) and damage_flag then
 			damage_flag = false
 			damage.iDamage = damage.iDamage + self.Damage
@@ -101,17 +101,17 @@ function Nico_TW_chili:GetSkillEffect(p1, p2)
                 ret:AddBounce(damage3.loc,2)
                 ret:AddDamage(damage2)
                 ret:AddDamage(damage3)
-                damage2.loc=damage2.loc+DIR_VECTORS[(direction + 1)% 4]
-                damage3.loc=damage3.loc+DIR_VECTORS[(direction - 1)% 4]
+                damage2.loc = damage2.loc+DIR_VECTORS[(direction + 1)% 4]
+                damage3.loc = damage3.loc+DIR_VECTORS[(direction - 1)% 4]
                 ret:AddDelay(0.1)
             end
         end
 	end
 	return ret
 end
-Nico_TW_chili_A=Nico_TW_chili:new{
-    kaboom=true,
-    UpgradeDescription="If the flames pass through smoke, lines of fire will emerge from the sides of it.",
+Nico_TW_chili_A = Nico_TW_chili:new{
+    kaboom = true,
+    UpgradeDescription = "If the flames pass through smoke, lines of fire will emerge from the sides of it.",
     TipImage = {
 		Unit = Point(2,3),
 		Enemy1 = Point(3,1),
@@ -121,11 +121,11 @@ Nico_TW_chili_A=Nico_TW_chili:new{
 		CustomPawn = "lmn_Chili",
 	}
 }
-Nico_TW_chili_B=Nico_TW_chili:new{
-    UpgradeDescription="Extends range by 1 tile and increases damage dealt to first target by 1.",
-    Range=3,
-    PathSize=3,
-    Damage=2,
+Nico_TW_chili_B = Nico_TW_chili:new{
+    UpgradeDescription = "Extends range by 1 tile and increases damage dealt to first target by 1.",
+    Range = 3,
+    PathSize = 3,
+    Damage = 2,
     TipImage = {
 		Unit = Point(2,3),
         Second_Origin=Point(2,3),
@@ -138,17 +138,17 @@ Nico_TW_chili_B=Nico_TW_chili:new{
 		CustomPawn = "lmn_Chili",
 	}
 }
-Nico_TW_chili_AB=Nico_TW_chili_A:new{
-    Range=3,
-    PathSize=3,
-	Damage=2,
+Nico_TW_chili_AB = Nico_TW_chili_A:new{
+    Range = 3,
+    PathSize = 3,
+	Damage = 2,
 	TipImage = {
 		Unit = Point(2,3),
 		Enemy1 = Point(3,1),
 		Target = Point(2,0),
-        Smoke1=Point(2,2),
-		Smoke2=Point(2,1),
-		Smoke3=Point(2,0),
+        Smoke1 = Point(2,2),
+		Smoke2 = Point(2,1),
+		Smoke3 = Point(2,0),
 		CustomPawn = "lmn_Chili",
 	}
 }

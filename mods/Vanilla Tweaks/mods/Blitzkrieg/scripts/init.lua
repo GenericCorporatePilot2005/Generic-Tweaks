@@ -28,6 +28,7 @@ function mod:init()
 		local explored = {[hash(p1)] = true}
 		local todo = {p2}
 		local origin = { [hash(p2)] = p1 }
+		local Conduct = Board:GetTerrain(current) == TERRAIN_WATER or Board:GetTerrain(current) == TERRAIN_SAND or Board:GetCustomTile(current) == "ground_rail.png" or Board:GetCustomTile(current) == "ground_rail2.png" or Board:GetCustomTile(current) == "ground_rail3.png" or Board:GetCustomTile(current) == "tosx_mud_0.png" or Board:GetCustomTile(current) == "lmn_ground_geyser.png" or Board:GetCustomTile(current) == "tosx_mission_cableVbreak.png" or Board:GetCustomTile(current) == "tosx_mission_cableHbreak.png" or (IsPassiveSkill("Electric_Smoke") and Board:IsSmoke(current)) or Board:IsAcid(current)
 		
 		if Board:IsPawnSpace(p2) or (self.Buildings and Board:IsBuilding(p2)) then
 			ret:AddAnimation(p1,"Lightning_Hit")
@@ -39,7 +40,7 @@ function mod:init()
 			if not explored[hash(current)] then
 				explored[hash(current)] = true
 				
-				if Board:IsPawnSpace(current) or self.Buildings and Board:IsBuilding(current) or Board:GetTerrain(current) == TERRAIN_WATER or Board:GetTerrain(current) == TERRAIN_SAND or Board:GetCustomTile(current) == "ground_rail.png" or Board:GetCustomTile(current) == "ground_rail2.png" or Board:GetCustomTile(current) == "ground_rail3.png" or Board:GetCustomTile(current) == "tosx_mud_0.png" or Board:GetCustomTile(current) == "lmn_ground_geyser.png" or Board:GetCustomTile(current) == "tosx_mission_cableVbreak.png" or Board:GetCustomTile(current) == "tosx_mission_cableHbreak.png" or (IsPassiveSkill("Electric_Smoke") and Board:IsSmoke(current)) or Board:IsAcid(current) then
+				if Board:IsPawnSpace(current) or self.Buildings and Board:IsBuilding(current) or Conduct then
 				
 					local direction = GetDirection(current - origin[hash(current)])
 					damage.sAnimation = "Lightning_Attack_"..direction
@@ -56,6 +57,11 @@ function mod:init()
 						damage.iDamage = DAMAGE_ZERO
 					end
 					
+					if Conduct and not Board:IsPawnSpace(current) then
+						damage.iDamage = self.Damage-1
+					else
+						damage.iDamage = self.Damage
+					end
 					ret:AddDamage(damage)
 					
 					if not Board:IsBuilding(current) then

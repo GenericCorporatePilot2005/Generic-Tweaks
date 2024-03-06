@@ -8,7 +8,7 @@ lmn_Chili = lmn_Chili:new{
 --Puffer--
 lmn_Puffer = lmn_Puffer:new{
 	SkillList = { "Nico_TW_puffer" },
-    IgnoreSmoke=true,
+    IgnoreSmoke = true,
     MoveSpeed = 4,
 }
 --Chomper--
@@ -53,7 +53,7 @@ function Move:GetSkillEffect(p1, p2, ...)
 		--could probably check whether it's possible to move to p2 without burrowing but this helps a little
             if Board:IsTerrain(p1,TERRAIN_WATER) then
                 local wateranim = SpaceDamage(p1,0)
-                wateranim.sAnimation="Splash"
+                wateranim.sAnimation = "Splash"
                 ret:AddDamage(wateranim)
             end
 			ret:AddBurrow(Board:GetPath(p1, p2, PATH_FLYER), NO_DELAY)
@@ -61,7 +61,7 @@ function Move:GetSkillEffect(p1, p2, ...)
 			ret:AddDelay(0.7)	--burrowing anim duration
             if Board:IsTerrain(p2,TERRAIN_WATER) then
                 local wateranim = SpaceDamage(p2,0)
-                wateranim.sAnimation="Splash"
+                wateranim.sAnimation = "Splash"
                 ret:AddDamage(wateranim)
             end
 			local path = extract_table(Board:GetPath(p1, p2, PATH_FLYER))
@@ -71,8 +71,6 @@ function Move:GetSkillEffect(p1, p2, ...)
 				ret:AddBounce(p, -2)
 				ret:AddDelay(.32 / dist)
 			end
-
-
 		return ret
 	end
 

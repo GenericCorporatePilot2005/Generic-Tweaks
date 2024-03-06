@@ -38,7 +38,7 @@ function mod:init()
             if Board:GetPawn(p1):GetImageOffset() ~= 0 then
                 -- change tank color
                 ret:AddScript(string.format("_G[%q].ImageOffset = Board:GetPawn(%s):GetImageOffset()",self.Deployed,p1:GetString()))
-                ret:AddAnimation(damage.loc,"ExploRepulse1", ANIM_NO_DELAY)
+                ret:AddBounce(damage.loc,1)
             else
                 Deploy_Tank.ImageOffset = 0
             end
@@ -91,7 +91,7 @@ function mod:init()
             ret:AddBounce(p2, 3)
             -- change tank color
                 ret:AddScript(string.format("_G[%q].ImageOffset = Board:GetPawn(%s):GetImageOffset()",self.Deployed,p1:GetString()))
-                ret:AddAnimation(damage.loc,"ExploRepulse1", ANIM_NO_DELAY)
+                ret:AddBounce(damage.loc,1)
             return ret
         end
     --pull Tank 2
@@ -115,7 +115,7 @@ function mod:init()
                 ret:AddBounce(p2, 3)
                 -- change tank color
                     ret:AddScript(string.format("_G[%q].ImageOffset = Board:GetPawn(%s):GetImageOffset()",self.Deployed,p1:GetString()))
-                    ret:AddAnimation(damage.loc,"ExploRepulse1", ANIM_NO_DELAY)
+                    ret:AddBounce(damage.loc,1)
                 return ret
             end
     end
@@ -140,7 +140,7 @@ function mod:init()
             ret:AddBounce(p2, 3)
             -- change tank color
                 ret:AddScript(string.format("_G[%q].ImageOffset = Board:GetPawn(%s):GetImageOffset()",self.Deployed,p1:GetString()))
-                ret:AddAnimation(damage.loc,"ExploRepulse1", ANIM_NO_DELAY)
+                ret:AddBounce(damage.loc,1)
             return ret
         end
         function DeploySkill_PullTank_B:GetTargetArea(point)

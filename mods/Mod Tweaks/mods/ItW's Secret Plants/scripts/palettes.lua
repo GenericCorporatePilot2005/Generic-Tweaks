@@ -113,138 +113,103 @@ local options = mod_loader.currentModContent[mod.id].options
     local paletteChili = options["Nico_Chili_Palette"].value
     local spritesChili = options["Nico_Chili_Sprites"].value
 
-    LOG("paletteChili: " .. paletteChili)
+    
     if spritesChili==1 then
         if paletteChili==0 then
             modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Chili.png", path .."img/portraits/chilialt0.5.png")
         elseif paletteChili==1 then
-            LOG(" -> Default!")
             lmn_Chili.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_chili")
         elseif paletteChili==2 then
-            LOG(" -> Alpha!")
             modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Chili.png", path .."img/portraits/chilialt0.6.png")
             lmn_Chili.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_alpha_chili")
         elseif paletteChili==3 then
-            LOG(" -> Leader!")
             modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Chili.png", path .."img/portraits/chilialt0.7.png")
-            lmn_Chili.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_boss_chili")                
-        else
-            LOG(" -> Secret Squad!")
+            lmn_Chili.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_boss_chili")
         end
     elseif spritesChili==2 then
         if paletteChili==0 then
             modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Chili.png", path .."img/portraits/chilialt1.5.png")
         elseif paletteChili==1 then
-            LOG(" -> Default!")
             modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Chili.png", path .."img/portraits/chilialt1.6.png")
             lmn_Chili.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_chili")
         elseif paletteChili==2 then
-            LOG(" -> Alpha!")
             modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Chili.png", path .."img/portraits/chilialt1.png")
             lmn_Chili.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_alpha_chili")
         elseif paletteChili==3 then
-            LOG(" -> Leader!")
             modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Chili.png", path .."img/portraits/chilialt1.7.png")
-            lmn_Chili.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_boss_chili")                
-        else
-            LOG(" -> Secret Squad!")
+            lmn_Chili.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_boss_chili")
         end
     elseif spritesChili==3 then
         if paletteChili==0 then
             modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Chili.png", path .."img/portraits/chilialt2.5.png")
         elseif paletteChili==1 then
-            LOG(" -> Default!")
             modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Chili.png", path .."img/portraits/chilialt2.6.png")
             lmn_Chili.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_chili")
         elseif paletteChili==2 then
-            LOG(" -> Alpha!")
             modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Chili.png", path .."img/portraits/chilialt2.7.png")
             lmn_Chili.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_alpha_chili")
         elseif paletteChili==3 then
-            LOG(" -> Leader!")
             modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Chili.png", path .."img/portraits/chilialt2.png")
-            lmn_Chili.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_boss_chili")                
-        else
-            LOG(" -> Secret Squad!")
+            lmn_Chili.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_boss_chili")
         end
     end
 --Puffer
     local palettePuffer= options["Nico_Puffer_Palette"].value
-    LOG("palettePuffer: " .. palettePuffer)
+    
 
     if palettePuffer==0 then
         modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Puffer.png", path .."img/portraits/pufferalt0.5.png")
     elseif palettePuffer==1 then
-        LOG(" -> Default!")
         lmn_Puffer.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_puffer")
     elseif palettePuffer==2 then
         Nico_TW_puffer.Emitter = "lmn_Puffer_Cloud_Burst_Alpha"
         Nico_TW_puffer.Icon="weapons/lmn_PufferAtk2.png"
         modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Puffer.png", path .."img/portraits/pufferalt.png")--alpha puffer's pilot
-        LOG(" -> Alpha!")
         lmn_Puffer.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_alpha_puffer")
     else
-        LOG(" -> Secret Squad!")
+        
     end
 --Chomper
     local paletteChomper = options["Nico_Chomper_Palette"].value
     local spritesChomper = options["Nico_Chomper_Sprites"].value
-
-    LOG("paletteChomper: " .. paletteChomper)
-
     if spritesChomper==1 then
         if paletteChomper==0 then 
             modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Chomper.png", path .."img/portraits/chomperalt0.5.png")
         elseif paletteChomper==1 then
-            LOG(" -> Default!")
             lmn_Chomper.Icon = path .."img/units/aliens/chomperatl0.5ic.png"
             lmn_Chomper.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_chomper")
         elseif paletteChomper==2 then
-            LOG(" -> Alpha!")
             modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Chomper.png", path .."img/portraits/chomperalt0.6.png")
             lmn_Chomper.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_alpha_chomper")
         elseif paletteChomper==3 then
-            LOG(" -> Leader!")
             modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Chomper.png", path .."img/portraits/chomperalt0.7.png")
             lmn_Chomper.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_boss_chomper")
-        else
-            LOG(" -> Secret Squad!")
         end
     elseif spritesChomper==2 then
         if paletteChomper==0 then
             modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Chomper.png", path .."img/portraits/chomperalt1.5.png")
         elseif paletteChomper==1 then
-            LOG(" -> Default!")
             modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Chomper.png", path .."img/portraits/chomperalt1.6.png")
             lmn_Chomper.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_chomper")
         elseif paletteChomper==2 then
-            LOG(" -> Alpha!")
             modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Chomper.png", path .."img/portraits/chomperalt1.png")
             lmn_Chomper.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_alpha_chomper")
         elseif paletteChomper==3 then
-            LOG(" -> Leader!")
             modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Chomper.png", path .."img/portraits/chomperalt1.7.png")
             lmn_Chomper.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_boss_chomper")
-        else
-            LOG(" -> Secret Squad!")
         end
     elseif spritesChomper==3 then
         if paletteChomper==0 then
             modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Chomper.png", path .."img/portraits/chomperalt2.5.png")
         elseif paletteChomper==1 then
-            LOG(" -> Default!")
             modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Chomper.png", path .."img/portraits/chomperalt2.6.png")
             lmn_Chomper.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_chomper")
         elseif paletteChomper==2 then
-            LOG(" -> Alpha!")
             modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Chomper.png", path .."img/portraits/chomperalt2.7.png")
             lmn_Chomper.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_alpha_chomper")
         elseif paletteChomper==3 then
-            LOG(" -> Leader!")
             modApi:appendAsset("img/portraits/pilots/Pilot_lmn_Chomper.png", path .."img/portraits/chomperalt2.png")
             lmn_Chomper.ImageOffset = modApi:getPaletteImageOffset("Nico_itw_boss_chomper")
-        else
-            LOG(" -> Secret Squad!")
         end
     end
         

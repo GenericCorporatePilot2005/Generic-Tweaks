@@ -21,49 +21,37 @@ function mod:init()
     --squad's tweaked sprites
         local mechPath = path .."img/units/player/"
         local Nico_TBeetle_sprites = options["Nico_TBeetle_sprites"].value
-    	if Nico_TBeetle_sprites==1 then
-			--normal beetle
-				modApi:appendAsset("img/units/player/vek_beetle.png",mechPath.."vek_beetle1.png")
-				modApi:appendAsset("img/units/player/vek_beetle_a.png",mechPath.."vek_beetle1_a.png")
-				modApi:appendAsset("img/units/player/vek_beetle_w.png",mechPath.."vek_beetle1_w.png")
-				modApi:appendAsset("img/units/player/vek_beetle_ns.png",mechPath.."vek_beetle1_ns.png")
-				modApi:appendAsset("img/units/player/vek_beetle_broken.png",mechPath.."vek_beetle1_broken.png")
-				modApi:appendAsset("img/units/player/vek_beetle_w_broken.png",mechPath.."vek_beetle1_w_broken.png")
-				modApi:appendAsset("img/units/player/vek_beetle_h.png",mechPath.."vek_beetle1_h.png")
-		elseif Nico_TBeetle_sprites==2 then
-			--alpha beetle
-				modApi:appendAsset("img/units/player/vek_beetle.png",mechPath.."vek_beetle.png")
-				modApi:appendAsset("img/units/player/vek_beetle_a.png",mechPath.."vek_beetle_a.png")
-				modApi:appendAsset("img/units/player/vek_beetle_w.png",mechPath.."vek_beetle_w.png")
-				modApi:appendAsset("img/units/player/vek_beetle_ns.png",mechPath.."vek_beetle_ns.png")
-		elseif Nico_TBeetle_sprites==3 then
-			--leader beetle
-				modApi:appendAsset("img/units/player/vek_beetle.png",mechPath.."vek_beetle3.png")
-				modApi:appendAsset("img/units/player/vek_beetle_a.png",mechPath.."vek_beetle3_a.png")
-				modApi:appendAsset("img/units/player/vek_beetle_w.png",mechPath.."vek_beetle3_w.png")
-				modApi:appendAsset("img/units/player/vek_beetle_ns.png",mechPath.."vek_beetle3_ns.png")
-				modApi:appendAsset("img/units/player/vek_beetle_h.png",mechPath.."vek_beetle3_h.png")
+		for x = 1,3 do
+			if x == Nico_TBeetle_sprites then
+				modApi:appendAsset("img/units/player/vek_beetle.png",mechPath.."vek_beetle"..x..".png")
+				modApi:appendAsset("img/units/player/vek_beetle_a.png",mechPath.."vek_beetle"..x.."_a.png")
+				modApi:appendAsset("img/units/player/vek_beetle_w.png",mechPath.."vek_beetle"..x.."_w.png")
+				modApi:appendAsset("img/units/player/vek_beetle_ns.png",mechPath.."vek_beetle"..x.."_ns.png")
+				modApi:appendAsset("img/units/player/vek_beetle_broken.png",mechPath.."vek_beetle"..x.."_broken.png")
+				modApi:appendAsset("img/units/player/vek_beetle_w_broken.png",mechPath.."vek_beetle"..x.."_w_broken.png")
+				modApi:appendAsset("img/units/player/vek_beetle_h.png",mechPath.."vek_beetle"..x.."_h.png")
+			elseif Nico_TBeetle_sprites==2 then
+				--alpha beetle
+					modApi:appendAsset("img/units/player/vek_beetle.png",mechPath.."vek_beetle.png")
+					modApi:appendAsset("img/units/player/vek_beetle_a.png",mechPath.."vek_beetle_a.png")
+					modApi:appendAsset("img/units/player/vek_beetle_w.png",mechPath.."vek_beetle_w.png")
+					modApi:appendAsset("img/units/player/vek_beetle_ns.png",mechPath.."vek_beetle_ns.png")
+			end
 		end
         local Nico_THornet_sprites = options["Nico_THornet_sprites"].value
-    	if Nico_THornet_sprites==1 then
-			--normal hornet
-				modApi:appendAsset("img/units/player/vek_hornet.png",mechPath.."vek_hornet1.png")
-				modApi:appendAsset("img/units/player/vek_hornet_a.png",mechPath.."vek_hornet1_a.png")
-				modApi:appendAsset("img/units/player/vek_hornet_ns.png",mechPath.."vek_hornet1_ns.png")
-				modApi:appendAsset("img/units/player/vek_hornet_broken.png",mechPath.."vek_hornet1_broken.png")
-				modApi:appendAsset("img/units/player/vek_hornet_h.png",mechPath.."vek_hornet1_h.png")
-		elseif Nico_THornet_sprites==2 then
-			--alpha hornet
-				modApi:appendAsset("img/units/player/vek_hornet.png",mechPath.."vek_hornet.png")
-				modApi:appendAsset("img/units/player/vek_hornet_a.png",mechPath.."vek_hornet_a.png")
-				modApi:appendAsset("img/units/player/vek_hornet_ns.png",mechPath.."vek_hornet_ns.png")
-		elseif Nico_THornet_sprites==3 then
-			--leader hornet
-				modApi:appendAsset("img/units/player/vek_hornet.png",mechPath.."vek_hornet3.png")
-				modApi:appendAsset("img/units/player/vek_hornet_a.png",mechPath.."vek_hornet3_a.png")
-				modApi:appendAsset("img/units/player/vek_hornet_ns.png",mechPath.."vek_hornet3_ns.png")
-				modApi:appendAsset("img/units/player/vek_hornet_broken.png",mechPath.."vek_hornet3_broken.png")
-				modApi:appendAsset("img/units/player/vek_hornet_w_broken.png",mechPath.."vek_hornet3_w_broken.png")
+		for x = 1,3 do
+			if x == Nico_THornet_sprites then
+				modApi:appendAsset("img/units/player/vek_hornet.png",mechPath.."vek_hornet"..x..".png")
+				modApi:appendAsset("img/units/player/vek_hornet_a.png",mechPath.."vek_hornet"..x.."_a.png")
+				modApi:appendAsset("img/units/player/vek_hornet_ns.png",mechPath.."vek_hornet"..x.."_ns.png")
+				modApi:appendAsset("img/units/player/vek_hornet_broken.png",mechPath.."vek_hornet"..x.."_broken.png")
+				modApi:appendAsset("img/units/player/vek_hornet_h.png",mechPath.."vek_hornet"..x.."_h.png")
+			elseif Nico_THornet_sprites==2 then
+				--alpha hornet
+					modApi:appendAsset("img/units/player/vek_hornet.png",mechPath.."vek_hornet.png")
+					modApi:appendAsset("img/units/player/vek_hornet_a.png",mechPath.."vek_hornet_a.png")
+					modApi:appendAsset("img/units/player/vek_hornet_ns.png",mechPath.."vek_hornet_ns.png")
+			end
 		end
         local Nico_TScarab_sprites = options["Nico_TScarab_sprites"].value
     	if Nico_TScarab_sprites==1 then
@@ -88,11 +76,10 @@ function mod:init()
 		modApi:addWeaponDrop("Vek_Scarab")
 	end
 
-	--Hornnet's new shield
+	--Hornet's new shield
 		HornetMech.LargeShield = true
-
 	--Beetle's smoke immunity
-		BeetleMech.IgnoreSmoke=true
+		BeetleMech.IgnoreSmoke = true
 	--Palettes
 		--beetle
 			local Nico_TBeetle_palette = options["Nico_TBeetle_palette"].value
@@ -149,7 +136,7 @@ function mod:metadata()--Don't make any changes to resources in metadata. metada
 	--Techno-Beetle sprites
 	modApi:addGenerationOption(
 		"Nico_TBeetle_sprites", "Tweaked Techno-Beetle sprites",
-		"What the Sprites of the Techno-Beetle will be.\nREQUIRES RESTART TO TAKE EFFECT!",
+		"Changes the sprites of the Techno-Beetle.\nREQUIRES RESTART TO TAKE EFFECT!",
 		{
 			strings = { "Squad's Default Sprites.", "Normal Vek Sprite", "Tweaked Alpha Vek Sprites", "Leader Vek Sprite"},
 			values = { 0, 1, 2, 3},
@@ -159,7 +146,7 @@ function mod:metadata()--Don't make any changes to resources in metadata. metada
 	--Techno-Hornet's sprites
 	modApi:addGenerationOption(
 		"Nico_THornet_sprites", "Tweaked Techno-Hornet sprites",
-		"What the Sprites of the Techno-Hornet will be.\nREQUIRES RESTART TO TAKE EFFECT!",
+		"Changes the sprites of the Techno-Hornet.\nREQUIRES RESTART TO TAKE EFFECT!",
 		{
 			strings = { "Squad's Default Sprites.", "Normal Vek Sprite", "Tweaked Alpha Vek Sprites", "Leader Vek Sprite"},
 			values = { 0, 1, 2, 3},
@@ -169,7 +156,7 @@ function mod:metadata()--Don't make any changes to resources in metadata. metada
 	--Techno-Scarab's sprites
 	modApi:addGenerationOption(
 		"Nico_TScarab_sprites", "Tweaked Techno-Scarab sprites",
-		"What the Sprites of the Techno-Scarab will be.\nREQUIRES RESTART TO TAKE EFFECT!",
+		"Changes the sprites of the Techno-Scarab.\nREQUIRES RESTART TO TAKE EFFECT!",
 		{
 			strings = { "Squad's Default Sprites.", "Tweaked Sprites", "Leader Vek Sprite"},
 			values = { 0, 1, 2},
@@ -179,7 +166,7 @@ function mod:metadata()--Don't make any changes to resources in metadata. metada
 	--Techno-Beetle palette
 	modApi:addGenerationOption(
 		"Nico_TBeetle_palette", "Tweaked Techno-Beetle palette",
-		"What the Palette of the Techno-Beetle will be.\nREQUIRES RESTART TO TAKE EFFECT!",
+		"Changes the palette of the Techno-Beetle.\nREQUIRES RESTART TO TAKE EFFECT!",
 		{
 			strings = { "Normal Vek Palette", "Alpha Vek Palette", "Leader Vek Palette"},
 			values = {1, 2, 3},
@@ -189,7 +176,7 @@ function mod:metadata()--Don't make any changes to resources in metadata. metada
 	--Techno-Hornet's palette
 	modApi:addGenerationOption(
 		"Nico_THornet_palette", "Tweaked Techno-Hornet palette",
-		"What the Palette of the Techno-Hornet will be.\nREQUIRES RESTART TO TAKE EFFECT!",
+		"Changes the palette of the Techno-Hornet.\nREQUIRES RESTART TO TAKE EFFECT!",
 		{
 			strings = { "Normal Vek Palette", "Alpha Vek Palette", "Leader Vek Palette"},
 			values = {1, 2, 3},
@@ -199,7 +186,7 @@ function mod:metadata()--Don't make any changes to resources in metadata. metada
 	--Techno-Scarab's palette
 	modApi:addGenerationOption(
 		"Nico_TScarab_palette", "Tweaked Techno-Scarab palette",
-		"What the palette of the Techno-Scarab will be.\nREQUIRES RESTART TO TAKE EFFECT!",
+		"Changes the palette of the Techno-Scarab.\nREQUIRES RESTART TO TAKE EFFECT!",
 		{
 			strings = { "Normal Vek Palette", "Alpha Vek Palette", "Leader Vek Palette"},
 			values = { 1, 2, 3},
