@@ -5,7 +5,7 @@ local mod = {
 	id = "Nico_SS_Tweaks",
 	name = "Secret Squad.",
 	version = "1",
-	description="Adds some small changes to the squad that got me hooked into Cyborg-Class Mechs.\nIt's time to repay my debt.",
+	description = "Adds some small changes to the squad that got me hooked into Cyborg-Class Mechs.\nIt's time to repay my debt.\nChanges in further detail:\nAllows the player to change the palette and sprites of the Squad, giving them the choice to look like their normal/alpha/leader variants.\nGives minor buffs to Beetle, and the cyborg class in general.\nVek Pheromones now also boot cyborg damage, Med Suplies now revive Cyborgs at mission end.",
 	requirements = {},
 	dependencies = { --This requests modApiExt from the mod loader
 		modApiExt = "1.17",
@@ -17,56 +17,37 @@ local mod = {
 
 function mod:init()
 	local options = mod_loader.currentModContent[mod.id].options
-    local path = mod_loader.mods[modApi.currentMod].resourcePath
+    local path = self.resourcePath
+	require(self.scriptPath .."TechnoVekHormones")
+	require(self.scriptPath .."cyborg_medical")
     --squad's tweaked sprites
-        local mechPath = path .."img/units/player/"
-        local Nico_TBeetle_sprites = options["Nico_TBeetle_sprites"].value
-		for x = 1,3 do
-			if x == Nico_TBeetle_sprites then
-				modApi:appendAsset("img/units/player/vek_beetle.png",mechPath.."vek_beetle"..x..".png")
-				modApi:appendAsset("img/units/player/vek_beetle_a.png",mechPath.."vek_beetle"..x.."_a.png")
-				modApi:appendAsset("img/units/player/vek_beetle_w.png",mechPath.."vek_beetle"..x.."_w.png")
-				modApi:appendAsset("img/units/player/vek_beetle_ns.png",mechPath.."vek_beetle"..x.."_ns.png")
-				modApi:appendAsset("img/units/player/vek_beetle_broken.png",mechPath.."vek_beetle"..x.."_broken.png")
-				modApi:appendAsset("img/units/player/vek_beetle_w_broken.png",mechPath.."vek_beetle"..x.."_w_broken.png")
-				modApi:appendAsset("img/units/player/vek_beetle_h.png",mechPath.."vek_beetle"..x.."_h.png")
-			elseif Nico_TBeetle_sprites==2 then
-				--alpha beetle
-					modApi:appendAsset("img/units/player/vek_beetle.png",mechPath.."vek_beetle.png")
-					modApi:appendAsset("img/units/player/vek_beetle_a.png",mechPath.."vek_beetle_a.png")
-					modApi:appendAsset("img/units/player/vek_beetle_w.png",mechPath.."vek_beetle_w.png")
-					modApi:appendAsset("img/units/player/vek_beetle_ns.png",mechPath.."vek_beetle_ns.png")
+        local mechPath = "img/units/player/"
+		--Beetle
+			local Nico_TBeetle_sprites = options["Nico_TBeetle_sprites"].value
+				modApi:appendAsset(mechPath.."vek_beetle.png",path..mechPath.."vek_beetle"..Nico_TBeetle_sprites..".png")
+				modApi:appendAsset(mechPath.."vek_beetle_a.png",path..mechPath.."vek_beetle"..Nico_TBeetle_sprites.."_a.png")
+				modApi:appendAsset(mechPath.."vek_beetle_w.png",path..mechPath.."vek_beetle"..Nico_TBeetle_sprites.."_w.png")
+				modApi:appendAsset(mechPath.."vek_beetle_ns.png",path..mechPath.."vek_beetle"..Nico_TBeetle_sprites.."_ns.png")
+			if Nico_TBeetle_sprites==1 then
+				modApi:appendAsset(mechPath.."vek_beetle_broken.png",path..mechPath.."vek_beetle"..Nico_TBeetle_sprites.."_broken.png")
+				modApi:appendAsset(mechPath.."vek_beetle_w_broken.png",path..mechPath.."vek_beetle"..Nico_TBeetle_sprites.."_w_broken.png")
 			end
-		end
-        local Nico_THornet_sprites = options["Nico_THornet_sprites"].value
-		for x = 1,3 do
-			if x == Nico_THornet_sprites then
-				modApi:appendAsset("img/units/player/vek_hornet.png",mechPath.."vek_hornet"..x..".png")
-				modApi:appendAsset("img/units/player/vek_hornet_a.png",mechPath.."vek_hornet"..x.."_a.png")
-				modApi:appendAsset("img/units/player/vek_hornet_ns.png",mechPath.."vek_hornet"..x.."_ns.png")
-				modApi:appendAsset("img/units/player/vek_hornet_broken.png",mechPath.."vek_hornet"..x.."_broken.png")
-				modApi:appendAsset("img/units/player/vek_hornet_h.png",mechPath.."vek_hornet"..x.."_h.png")
-			elseif Nico_THornet_sprites==2 then
-				--alpha hornet
-					modApi:appendAsset("img/units/player/vek_hornet.png",mechPath.."vek_hornet.png")
-					modApi:appendAsset("img/units/player/vek_hornet_a.png",mechPath.."vek_hornet_a.png")
-					modApi:appendAsset("img/units/player/vek_hornet_ns.png",mechPath.."vek_hornet_ns.png")
+			if Nico_TBeetle_sprites~=2 then
+				modApi:appendAsset(mechPath.."vek_beetle_h.png",path..mechPath.."vek_beetle"..Nico_TBeetle_sprites.."_h.png")
 			end
-		end
-        local Nico_TScarab_sprites = options["Nico_TScarab_sprites"].value
-    	if Nico_TScarab_sprites==1 then
-			--normal scarab
-				modApi:appendAsset("img/units/player/vek_scarab.png",mechPath.."vek_scarab.png")
-				modApi:appendAsset("img/units/player/vek_scarab_a.png",mechPath.."vek_scarab_a.png")
-				modApi:appendAsset("img/units/player/vek_scarab_w.png",mechPath.."vek_scarab_w.png")
-				modApi:appendAsset("img/units/player/vek_scarab_ns.png",mechPath.."vek_scarab_ns.png")
-		elseif Nico_TScarab_sprites==2 then
-			--leader scarab
-				modApi:appendAsset("img/units/player/vek_scarab.png",mechPath.."vek_scarab2.png")
-				modApi:appendAsset("img/units/player/vek_scarab_a.png",mechPath.."vek_scarab2_a.png")
-				modApi:appendAsset("img/units/player/vek_scarab_w.png",mechPath.."vek_scarab2_w.png")
-				modApi:appendAsset("img/units/player/vek_scarab_ns.png",mechPath.."vek_scarab2_ns.png")
-		end
+		--Hornet
+			local Nico_THornet_sprites = options["Nico_THornet_sprites"].value
+			modApi:appendAsset(mechPath.."vek_hornet.png",path..mechPath.."vek_hornet"..Nico_THornet_sprites..".png")
+			modApi:appendAsset(mechPath.."vek_hornet_a.png",path..mechPath.."vek_hornet"..Nico_THornet_sprites.."_a.png")
+			modApi:appendAsset(mechPath.."vek_hornet_ns.png",path..mechPath.."vek_hornet"..Nico_THornet_sprites.."_ns.png")
+			if Nico_THornet_sprites~=2 then modApi:appendAsset(mechPath.."vek_hornet_broken.png",path..mechPath.."vek_hornet"..Nico_THornet_sprites.."_broken.png") end
+			if Nico_THornet_sprites==1 then modApi:appendAsset(mechPath.."vek_hornet_h.png",path..mechPath.."vek_hornet"..Nico_THornet_sprites.."_h.png") end
+		--Scarab
+			local Nico_TScarab_sprites = options["Nico_TScarab_sprites"].value
+			modApi:appendAsset(mechPath.."vek_scarab.png",path..mechPath.."vek_scarab"..Nico_TScarab_sprites..".png")
+			modApi:appendAsset(mechPath.."vek_scarab_a.png",path..mechPath.."vek_scarab"..Nico_TScarab_sprites.."_a.png")
+			modApi:appendAsset(mechPath.."vek_scarab_w.png",path..mechPath.."vek_scarab"..Nico_TScarab_sprites.."_w.png")
+			modApi:appendAsset(mechPath.."vek_scarab_ns.png",path..mechPath.."vek_scarab"..Nico_TScarab_sprites.."_ns.png")
 	--adds the weapons to the Weapon Deck
     local weapondeck= options["Nico_SS_weapondeck"].value
 
@@ -80,45 +61,31 @@ function mod:init()
 		HornetMech.LargeShield = true
 	--Beetle's smoke immunity
 		BeetleMech.IgnoreSmoke = true
+	--Beetle's HP
+		BeetleMech.Health = 4
 	--Palettes
 		--beetle
 			local Nico_TBeetle_palette = options["Nico_TBeetle_palette"].value
-			if Nico_TBeetle_palette==1 then
-				modApi:appendAsset("img/portraits/pilots/Pilot_BeetleMech.png", path .."img/portraits/pilots/Pilot_BeetleMech1.png")
-				BeetleMech.ImageOffset = modApi:getPaletteImageOffset("Nico_Palette_Vek")
-			elseif Nico_TBeetle_palette==3 then
-				modApi:appendAsset("img/portraits/pilots/Pilot_BeetleMech.png", path .."img/portraits/pilots/Pilot_BeetleMech3.png")
-				BeetleMech.ImageOffset = modApi:getPaletteImageOffset("Nico_Palette_Vek_Boss")
-			end
+			if Nico_TBeetle_palette==1 then BeetleMech.ImageOffset = modApi:getPaletteImageOffset("Nico_Palette_Vek") end
+			if Nico_TBeetle_palette~=2 then modApi:appendAsset("img/portraits/pilots/Pilot_BeetleMech.png", path .."img/portraits/pilots/Pilot_BeetleMech"..Nico_TBeetle_palette..".png") end
+			if Nico_TBeetle_palette==3 then BeetleMech.ImageOffset = modApi:getPaletteImageOffset("Nico_Palette_Vek_Boss") end
 		--hornet
 			local Nico_THornet_palette = options["Nico_THornet_palette"].value
-			if Nico_THornet_palette==1 then
-				modApi:appendAsset("img/portraits/pilots/Pilot_HornetMech.png", path .."img/portraits/pilots/Pilot_HornetMech1.png")
-				HornetMech.ImageOffset = modApi:getPaletteImageOffset("Nico_Palette_Vek")
-				Vek_Hornet.Icon = "weapons/enemy_hornet1.png"
-			elseif Nico_THornet_palette==3 then
-				modApi:appendAsset("img/weapons/HornetAtkBoss.png", path .."img/weapons/HornetAtkBoss.png")
-				modApi:appendAsset("img/portraits/pilots/Pilot_HornetMech.png", path .."img/portraits/pilots/Pilot_HornetMech3.png")
-				HornetMech.ImageOffset = modApi:getPaletteImageOffset("Nico_Palette_Vek_Boss")
-				Vek_Hornet.Icon = "weapons/HornetAtkBoss.png"
+			modApi:appendAsset("img/weapons/enemy_hornet3.png", path .."img/weapons/enemy_hornet3.png")
+			if Nico_THornet_palette==1 then HornetMech.ImageOffset = modApi:getPaletteImageOffset("Nico_Palette_Vek") end
+			if Nico_THornet_palette~=2 then
+				Vek_Hornet.Icon = "weapons/enemy_hornet"..Nico_THornet_palette..".png"
+				modApi:appendAsset("img/portraits/pilots/Pilot_HornetMech.png", path .."img/portraits/pilots/Pilot_HornetMech"..Nico_THornet_palette..".png")
 			end
+			if Nico_THornet_palette==3 then HornetMech.ImageOffset = modApi:getPaletteImageOffset("Nico_Palette_Vek_Boss") end
 		--scarab
 			local Nico_TScarab_palette = options["Nico_TScarab_palette"].value
-			if Nico_TScarab_palette==1 then
-				modApi:appendAsset("img/portraits/pilots/Pilot_ScarabMech.png", path .."img/portraits/pilots/Pilot_ScarabMech1.png")
-				ScarabMech.ImageOffset = modApi:getPaletteImageOffset("Nico_Palette_Scarab1")
-				Vek_Scarab.UpShot = "effects/shotup_ant1.png"
-				Vek_Scarab.Icon = "weapons/enemy_scarab1.png"
-			elseif Nico_TScarab_palette==2 then
-				ScarabMech.ImageOffset = modApi:getPaletteImageOffset("Nico_Palette_Scarab2")
-				Vek_Scarab.UpShot = "effects/shotup_ant2.png"
-			elseif Nico_TScarab_palette==3 then
-				modApi:appendAsset("img/weapons/ScarabAtkBoss.png", path .."img/weapons/ScarabAtkBoss.png")
-				modApi:appendAsset("img/portraits/pilots/Pilot_ScarabMech.png", path .."img/portraits/pilots/Pilot_ScarabMech3.png")
-				ScarabMech.ImageOffset = modApi:getPaletteImageOffset("Nico_Palette_Scarab3")
-				Vek_Scarab.UpShot = "effects/shotup_antB.png"
-				Vek_Scarab.Icon = "weapons/ScarabAtkBoss.png"
-			end
+			modApi:appendAsset("img/weapons/enemy_scarab3.png", path .."img/weapons/enemy_scarab3.png")
+			modApi:copyAsset("img/effects/shotup_antB.png","img/effects/shotup_ant3.png")
+			Vek_Scarab.Icon = "weapons/enemy_scarab"..Nico_TScarab_palette..".png"
+			ScarabMech.ImageOffset = modApi:getPaletteImageOffset("Nico_Palette_Scarab"..Nico_TScarab_palette)
+			Vek_Scarab.UpShot = "effects/shotup_ant"..Nico_TScarab_palette..".png"
+			if Nico_TScarab_palette~=2 then modApi:appendAsset("img/portraits/pilots/Pilot_ScarabMech.png", path .."img/portraits/pilots/Pilot_ScarabMech"..Nico_TScarab_palette..".png") end
 	
 end
 
@@ -129,7 +96,7 @@ function mod:metadata()--Don't make any changes to resources in metadata. metada
 		"Adds the three Cyborg weapons to the weapon deck.\nREQUIRES RESTART TO TAKE EFFECT!",
 		{
 			strings = { "Do it.", "Don't."},
-			values = { 0, 1},
+			values = {0, 1},
 			value = 0
 		}
 	)
@@ -138,8 +105,8 @@ function mod:metadata()--Don't make any changes to resources in metadata. metada
 		"Nico_TBeetle_sprites", "Tweaked Techno-Beetle sprites",
 		"Changes the sprites of the Techno-Beetle.\nREQUIRES RESTART TO TAKE EFFECT!",
 		{
-			strings = { "Squad's Default Sprites.", "Normal Vek Sprite", "Tweaked Alpha Vek Sprites", "Leader Vek Sprite"},
-			values = { 0, 1, 2, 3},
+			strings = {"Normal Vek Sprite", "Tweaked Alpha Vek Sprites", "Leader Vek Sprite"},
+			values = {1, 2, 3},
 			value = 2
 		}
 	)
@@ -148,8 +115,8 @@ function mod:metadata()--Don't make any changes to resources in metadata. metada
 		"Nico_THornet_sprites", "Tweaked Techno-Hornet sprites",
 		"Changes the sprites of the Techno-Hornet.\nREQUIRES RESTART TO TAKE EFFECT!",
 		{
-			strings = { "Squad's Default Sprites.", "Normal Vek Sprite", "Tweaked Alpha Vek Sprites", "Leader Vek Sprite"},
-			values = { 0, 1, 2, 3},
+			strings = {"Normal Vek Sprite", "Tweaked Alpha Vek Sprites", "Leader Vek Sprite"},
+			values = {1, 2, 3},
 			value = 2
 		}
 	)
@@ -158,9 +125,9 @@ function mod:metadata()--Don't make any changes to resources in metadata. metada
 		"Nico_TScarab_sprites", "Tweaked Techno-Scarab sprites",
 		"Changes the sprites of the Techno-Scarab.\nREQUIRES RESTART TO TAKE EFFECT!",
 		{
-			strings = { "Squad's Default Sprites.", "Tweaked Sprites", "Leader Vek Sprite"},
-			values = { 0, 1, 2},
-			value = 2
+			strings = {"Tweaked Sprites", "Leader Vek Sprite"},
+			values = {1, 2},
+			value = 1
 		}
 	)
 	--Techno-Beetle palette

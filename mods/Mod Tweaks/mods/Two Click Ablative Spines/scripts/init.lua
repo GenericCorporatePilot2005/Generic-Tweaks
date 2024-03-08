@@ -10,7 +10,7 @@ local mod = {
 	description = "This mod makes the weapon of Alloy Mech, the Ablative Spines, into a two click weapon, allowing you to target two different targets, not just opposites. Also gives the Husks web and smoke immunity.\nIdea by Cat-As$-Trophy, from the ItB discord server",
 	dependencies = {modApiExt = "1.17","tosx_Mercurials"},
 	libs = {},
-	enabled = false,
+	enabled = true,
 }
 
 function mod:init()
@@ -18,11 +18,15 @@ function mod:init()
 	tosx_Prime_Tendrils.Description = "Damage and push tiles on two different sides. Mechs are healed instead."
 	tosx_Prime_Tendrils.TwoClick = true
 	tosx_Prime_Tendrils.TipImage = {
-		Unit = Point(2,2),
-		Enemy = Point(2,1),
-		Friendly_Damaged = Point(2,3),
-		Target = Point(2,1),
-		Second_Click = Point(2,3),
+		Unit = Point(2,1),
+		Second_Origin = Point(2,1),
+		Enemy = Point(2,0),
+		Friendly_Damaged1 = Point(3,1),
+		Friendly_Damaged2 = Point(2,2),
+		Target = Point(3,1),
+		Second_Click = Point(2,0),
+		Second_Target = Point(2,2),
+		CustomEnemy = "ScorpionBoss",
 	}
 	function tosx_Prime_Tendrils:GetSkillEffect(p1, p2)
 		local ret = SkillEffect()
@@ -84,6 +88,7 @@ function mod:init()
 		
 		return ret
 	end
+	tosx_Science_Splitter.Description = "Sheds a Husk and pushes tiles adjacent to it.\n\nHusk can merge with Mechs to heal them and push their adjacent tiles.\n\nHusks are unaffected by Webbing and Smoke."
 	tosx_Husk1.IgnoreSmoke = true
 	tosx_Husk2.IgnoreSmoke = true
 	local path = self.resourcePath
