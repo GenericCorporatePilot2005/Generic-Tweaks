@@ -18,8 +18,8 @@ local mod = {
 function mod:init()
 	local options = mod_loader.currentModContent[mod.id].options
     local path = self.resourcePath
-	require(self.scriptPath .."TechnoVekHormones")
-	require(self.scriptPath .."cyborg_medical")
+	if options["Nico_Cyborg_Hormones"].value == 0 then require(self.scriptPath .."TechnoVekHormones") end
+	if options["Nico_Cyborg_Medical"].value == 0 then require(self.scriptPath .."cyborg_medical") end
     --squad's tweaked sprites
         local mechPath = "img/units/player/"
 		--Beetle
@@ -49,9 +49,7 @@ function mod:init()
 			modApi:appendAsset(mechPath.."vek_scarab_w.png",path..mechPath.."vek_scarab"..Nico_TScarab_sprites.."_w.png")
 			modApi:appendAsset(mechPath.."vek_scarab_ns.png",path..mechPath.."vek_scarab"..Nico_TScarab_sprites.."_ns.png")
 	--adds the weapons to the Weapon Deck
-    local weapondeck= options["Nico_SS_weapondeck"].value
-
-    if weapondeck==0 then
+    if options["Nico_SS_weapondeck"].value == 0 then
 		modApi:addWeaponDrop("Vek_Beetle")
 		modApi:addWeaponDrop("Vek_Hornet")
 		modApi:addWeaponDrop("Vek_Scarab")
@@ -90,9 +88,27 @@ function mod:init()
 end
 
 function mod:metadata()--Don't make any changes to resources in metadata. metadata runs regardless of if your mod is enabled or not.
+	modApi:addGenerationOption(
+		"Nico_Cyborg_Medical", "Medical Supplies Buff",
+		"Medical Supplies revives Cyborgs at the end of a mission now.\nRecommended to turn off if the mod Unfair Tweaks is also on, since this feature is also on that mod by default.\nREQUIRES RESTART TO TAKE EFFECT!",
+		{
+			strings = { "On.", "Off."},
+			values = {0, 1},
+			value = 0
+		}
+	)
+	modApi:addGenerationOption(
+		"Nico_Cyborg_Hormones", "Vek Hormones Buff",
+		"Vek Hormones make Cyborgs deal extra damage to Vek.\nRecommended to turn off if the mod Unfair Tweaks is also on, since this feature is also on that mod by default.\nREQUIRES RESTART TO TAKE EFFECT!",
+		{
+			strings = { "On.", "Off."},
+			values = {0, 1},
+			value = 0
+		}
+	)
     --adds the weapons to the Weapon Deck
 	modApi:addGenerationOption(
-		"Nico_SS_weapondeck", "Vextra SS's weapons on Weapon Deck",
+		"Nico_SS_weapondeck", "SS's weapons on Weapon Deck",
 		"Adds the three Cyborg weapons to the weapon deck.\nREQUIRES RESTART TO TAKE EFFECT!",
 		{
 			strings = { "Do it.", "Don't."},

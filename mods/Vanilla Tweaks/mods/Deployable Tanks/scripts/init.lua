@@ -8,7 +8,7 @@ local mod = {
 	icon = "icon.png",
 	dependencies = {},
 	libs = {},
-	enabled=false,
+	enabled = false,
 }
 
 function mod:init()

@@ -8,18 +8,18 @@ local mod = {
 	icon = "img/icon.png",
 	dependencies = {},
 	libs = {},
-	enabled=false,
+	enabled = false,
 }
 
 function mod:init()
+    local options = mod_loader.currentModContent[mod.id].options
 	require(self.scriptPath .."extra")
     --aracnoid
+    if options["Nico_Arachnoid_Web"].value == 0 then
         modApi:appendAsset("img/advanced/units/player/aracnoid.png", mod.resourcePath .."img/advanced/units/player/aracnoid.png")
         modApi:appendAsset("img/advanced/units/player/aracnoid_death.png", mod.resourcePath .."img/advanced/units/player/aracnoid_death.png")
         modApi:appendAsset("img/advanced/units/player/aracnoida.png", mod.resourcePath .."img/advanced/units/player/aracnoida.png")
         modApi:appendAsset("img/advanced/units/player/aracnoid_emerge.png", mod.resourcePath .."img/advanced/units/player/aracnoid_emerge.png")
-        DeployUnit_AracnoidAtk.SelfDamage = 1
-
         function Ranged_Arachnoid:GetSkillEffect(p1, p2)
             local ret = SkillEffect()
             local dir = GetDirection(p2 - p1)            
@@ -59,19 +59,51 @@ function mod:init()
             
             return ret
         end
-        function DeployUnit_AracnoidAtk:GetSkillEffect(p1, p2)
-            local ret = SkillEffect()
-            local dir = GetDirection(p2 - p1)
+    end
+    DeployUnit_AracnoidAtk.SelfDamage = 1
+    function DeployUnit_AracnoidAtk:GetSkillEffect(p1, p2)
+        local ret = SkillEffect()
+        local dir = GetDirection(p2 - p1)
+    
+        local damage = SpaceDamage(p2, self.Damage, dir)
+        damage.iAcid = self.Acid 
+        ret:AddMelee(p1, damage)
         
-            local damage = SpaceDamage(p2, self.Damage, dir)
-            damage.iAcid = self.Acid 
-            ret:AddMelee(p1, damage)
-            
-            ret:AddDamage(SpaceDamage(p1,1))
-            
-            return ret
-            
-        end
+        ret:AddDamage(SpaceDamage(p1,1))
+        
+        return ret
+        
+    end
+end
+
+function mod:metadata()
+	modApi:addGenerationOption(
+		"Nico_Arachnoid_Sprites", "Arachnoid Sprites.",
+		"Changes the sprites of the Arachnoid to allow the palette changes.",
+		{
+			strings = { "On.", "Off."},
+			values = {0, 1},
+			value = 0
+		}
+	)
+	modApi:addGenerationOption(
+		"Nico_Arachnoid_Web", "Arachnoid's Web Immunity.",
+		"Changes the sprites of the Arachnoid to allow the palette changes.",
+		{
+			strings = { "On.", "Off."},
+			values = {0, 1},
+			value = 0
+		}
+	)
+	modApi:addGenerationOption(
+		"Nico_Psion_Receiver", "Psionic Receiver Buff",
+		"Having Psionic Receiver, with a Arachnid Psion present makes all spiderling eggs spawn Arachnoids.\nRecommended to turn off if the mod Unfair Tweaks is also on, since this feature is also on that mod by default.\nREQUIRES RESTART TO TAKE EFFECT!",
+		{
+			strings = { "On.", "Off."},
+			values = {0, 1},
+			value = 0
+		}
+	)
 end
 
 function mod:load(options, version)
