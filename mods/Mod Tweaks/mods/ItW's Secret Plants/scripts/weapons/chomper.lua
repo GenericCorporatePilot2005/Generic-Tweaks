@@ -10,7 +10,7 @@ Nico_TW_chomper = lmn_ChomperAtk:new{
 	PowerCost = 1,
 	Upgrades = 2,
 	UpgradeCost = {1, 1},
-	UpgradeList = { "Dazed, -1 Damage", "+2 Range" },
+	UpgradeList = { "Dazed and Smoked", "+2 Range" },
 	TipImage = {
 		Unit = Point(2,2),
 		Enemy = Point(2,0),
@@ -23,9 +23,9 @@ Nico_TW_chomper = lmn_ChomperAtk:new{
 }
 
 Nico_TW_chomper_A = Nico_TW_chomper:new{
-	UpgradeDescription = "Change the target's attack square after biting it. Decrease attack damage by 1.",
+	UpgradeDescription = "Change the target's attack square after biting it. +1 Damage for every 2 Fire tiles crossed.",
 	TwoClick = true,
-	Damage = 1,
+	Damage = 2,
 	CustomTipImage = "Nico_TW_chomper_Tip",
 }
 
@@ -63,6 +63,7 @@ function Nico_TW_chomper:GetSkillEffect(p1, p2)
 	local adjacent = p1 + DIR_VECTORS[dir]
 	local target = p1 + DIR_VECTORS[dir]
 	local cache = self.Range
+	local cooked = 0
 	local k = 1
 	while cache > 0 do
 		local curr = p1 + DIR_VECTORS[dir]*k
@@ -77,8 +78,13 @@ function Nico_TW_chomper:GetSkillEffect(p1, p2)
 		end
 		
 		k = k+1
-		if not (Board:IsFire(curr) or Board:IsTerrain(curr,TERRAIN_LAVA)) then cache = cache - 1 end
+		if not (Board:IsFire(curr) or Board:IsTerrain(curr,TERRAIN_LAVA)) then
+			cache = cache - 1
+		else
+			cooked = cooked + 1
+		end
 	end
+	local damageAmount = self.Damage+math.floor(cooked/2)
 	
 	if not Board:IsValid(target) then
 		return ret
@@ -97,7 +103,7 @@ function Nico_TW_chomper:GetSkillEffect(p1, p2)
 			d.sSound = "/weapons/charge_impact"
 			d.loc = target
 		end
-		d.iDamage = self.Damage
+		d.iDamage = damageAmount
 		d.sAnimation = self.Anim_Impact .. dir
 	end
 
@@ -117,7 +123,7 @@ function Nico_TW_chomper:GetSkillEffect(p1, p2)
 		ret:AddDelay(0.25)
 		ret:AddCharge(Board:GetSimplePath(target, adjacent), FULL_DELAY)
 
-		local d = SpaceDamage(adjacent, self.Damage)
+		local d = SpaceDamage(adjacent, damageAmount)
 		d.sSound = "/weapons/charge_impact"
 		d.sAnimation = self.Anim_Impact .. dir
 		ret:AddMelee(p1, d, NO_DELAY)

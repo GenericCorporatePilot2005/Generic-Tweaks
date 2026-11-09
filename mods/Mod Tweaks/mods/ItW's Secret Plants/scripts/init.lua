@@ -17,9 +17,8 @@ function mod:init()
 	require(self.scriptPath .."weapons/weapons")
 	local options = mod_loader.currentModContent[mod.id].options
 	    --adds the weapons to the Weapon Deck
-        local Nico_tw_ITW_weapon_deck= options["Nico_tw_ITW_weapon_deck"].value
 
-        if Nico_tw_ITW_weapon_deck==0 then
+        if options["Nico_tw_ITW_weapon_deck"].value then
             modApi:addWeaponDrop("Nico_TW_chili")
             modApi:addWeaponDrop("Nico_TW_chomper")
             modApi:addWeaponDrop("Nico_TW_puffer")
@@ -42,8 +41,8 @@ function mod:metadata()--Don't make any changes to resources in metadata. metada
 		"What the Sprites of the Techno-Puffer will be. REQUIRES RESTART TO TAKE EFFECT!",
 		{
 			strings = { "Original", "Tweaked"},
-			values = { 0, 1},
-			value = 1
+			values = { false, true},
+			value = true
 		}
 	)
 	modApi:addGenerationOption(
@@ -88,8 +87,8 @@ function mod:metadata()--Don't make any changes to resources in metadata. metada
 		"Adds the three Cyborg weapons to the weapon deck.\nREQUIRES RESTART TO TAKE EFFECT!",
 		{
 			strings = { "Do it.", "Don't."},
-			values = { 0, 1},
-			value = 0
+			values = { true, false},
+			value = true
 		}
 	)
 end

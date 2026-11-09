@@ -3,9 +3,12 @@ local mod = mod_loader.mods[modApi.currentMod]
 local path = mod.resourcePath
 
 local function isCreep(p)
+	if not (GAME and Game and GAME.lmn_creep) then return end
 	assert(GAME)
 	assert(Board)
-	return GAME.lmn_creep[p2idx(p)]
+	if GAME.lmn_creep[p2idx(p)] then
+		return GAME.lmn_creep[p2idx(p)]
+	else return false end
 end
 local function isCreepable(p)
 	assert(Board)
@@ -51,7 +54,7 @@ Nico_Floater_Atk = Skill:new{
 	Spawn = "Nico_Techno_Colony",
 	Icon = "weapons/Nico_Floater_Atk.png",
 	Upgrades = 2,
-	UpgradeList = {"Resistance","Shield On Lethal"},
+	UpgradeList = {"Resilience","Shield On Lethal"},
 	UpgradeCost = {2,2},
 	PowerCost = 2,
     PathSize = 1,
@@ -64,11 +67,11 @@ Nico_Floater_Atk = Skill:new{
 }
 
 Nico_Floater_Atk_A = Nico_Floater_Atk:new{
-	UpgradeDescription = "+1 Max Health for Techno-Colonies.\nPiercer deals Self Damage equal to Health.",
+	UpgradeDescription = "+1 Max Health for Techno-Colonies.\nImpaler gains 1 tile of range, Piercer deals Self Damage equal to current Health.",
 	Spawn = "Nico_Techno_Colony_A",
 }
 Nico_Floater_Atk_B = Nico_Floater_Atk:new{
-	UpgradeDescription = "On Kill, with either Weapon of the Techno-Colony, Shields all adjacent Allies.",
+	UpgradeDescription = "On Kill, with either weapon of the Techno-Colony, Shields all Allies adjacent to the target.",
 	Spawn = "Nico_Techno_Colony_B",
 }
 Nico_Floater_Atk_AB = Nico_Floater_Atk_A:new{
@@ -128,7 +131,7 @@ end
 
 Nico_Colony_Impaler = Skill:new{
 	Name = "Impaler",
-	Description = "Impales an enemy in a range equal to the Techno-Colony's Health + 2, + 1 Damage when Shielded. Creep can expand target area.",
+	Description = "Impales an enemy in a range equal to the Techno-Colony's Health + 2, + 1 Damage when Shielded. Can target tiles with Creep.",
     Class = "TechnoVek",
 	Icon = "weapons/Nico_Colony_Impaler.png",
 	Damage = 1,
@@ -193,10 +196,10 @@ end
 
 Nico_Colony_Piercer = Skill:new{
 	Name = "Piercer",
-	Description = "Pierces an enemy in a Diamond-shaped Area, dealing Deadly Damage to target and self, pushes all adjacent targets. Creep can expand target area.",
+	Description = "Pierces an enemy in a Diamond-shaped area of fixed range, dealing great Damage to target and self, pushes all adjacent targets. Can target tiles with Creep.",
     Class = "TechnoVek",
 	Damage = 2,
-	TipDamageCustom = "Max Health times 2",
+	TipDamageCustom = "Current Health times 2.",
 	Icon = "weapons/Nico_Colony_Piercer.png",
 	SelfDamage = DAMAGE_DEATH,
     ArtillerySize = 2,

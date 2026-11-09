@@ -2,20 +2,14 @@ local mod = modApi:getCurrentMod()
 local path = mod.scriptPath
 require(path .."palettes")
 --Chili--
-lmn_Chili = lmn_Chili:new{
-    SkillList = { "Nico_TW_chili" },
-}
+lmn_Chili.SkillList = { "Nico_TW_chili" }
 --Puffer--
-lmn_Puffer = lmn_Puffer:new{
-	SkillList = { "Nico_TW_puffer" },
-    IgnoreSmoke = true,
-    MoveSpeed = 4,
-}
+lmn_Puffer.SkillList = { "Nico_TW_puffer" }
+lmn_Puffer.IgnoreSmoke = true
+lmn_Puffer.MoveSpeed = 4
 --Chomper--
-lmn_Chomper = lmn_Chomper:new{
-	SkillList = { "Nico_TW_chomper" },
-    MoveSpeed = 4,
-}
+lmn_Chomper.SkillList = { "Nico_TW_chomper" }
+lmn_Chomper.MoveSpeed = 4
 
 local oldMove = Move.GetTargetArea
 function Move:GetTargetArea(p, ...)
@@ -39,6 +33,17 @@ function Move:GetTargetArea(p, ...)
 	return oldMove(self, p, ...)
 end
 
+local function waterAnim(point)
+	if Board:IsTerrain(point,TERRAIN_LAVA) then
+		return "Splash_lava"
+	elseif Board:IsAcid(point) and Board:IsTerrain(point,TERRAIN_WATER) then
+		return "Splash_acid"
+	elseif Board:IsTerrain(point,TERRAIN_WATER) then
+    	return "Splash"
+	else
+		return ""
+	end
+end
 --Stolen that from Metalocif!
 local oldMove = Move.GetSkillEffect
 function Move:GetSkillEffect(p1, p2, ...)
@@ -47,13 +52,9 @@ function Move:GetSkillEffect(p1, p2, ...)
 		local ret = SkillEffect()
 		local pawnId = mover:GetId()
 
-		-- just preview move.
-		-- ret:AddScript(string.format("Board:GetPawn(%s):SetSpace(Point(-1, -1))", pawnId))
-		--it's annoying to go through the whole burrowing animation for one tile so we force a normal Move
-		--could probably check whether it's possible to move to p2 without burrowing but this helps a little
             if Board:IsTerrain(p1,TERRAIN_WATER) then
                 local wateranim = SpaceDamage(p1,0)
-                wateranim.sAnimation = "Splash"
+                wateranim.sAnimation = waterAnim(p1)
                 ret:AddDamage(wateranim)
             end
 			ret:AddBurrow(Board:GetPath(p1, p2, PATH_FLYER), NO_DELAY)
@@ -61,7 +62,7 @@ function Move:GetSkillEffect(p1, p2, ...)
 			ret:AddDelay(0.7)	--burrowing anim duration
             if Board:IsTerrain(p2,TERRAIN_WATER) then
                 local wateranim = SpaceDamage(p2,0)
-                wateranim.sAnimation = "Splash"
+				wateranim.sAnimation = waterAnim(p2)
                 ret:AddDamage(wateranim)
             end
 			local path = extract_table(Board:GetPath(p1, p2, PATH_FLYER))

@@ -41,9 +41,12 @@ Nico_Techno_Floater = Pawn:new{
 }
 
 local function isCreep(p)
+	if not (GAME and Game and GAME.lmn_creep) then return end
 	assert(GAME)
 	assert(Board)
-	return GAME.lmn_creep[p2idx(p)]
+	if GAME.lmn_creep[p2idx(p)] then
+		return GAME.lmn_creep[p2idx(p)]
+	else return false end
 end
 
 Nico_Techno_Floater_Move = Move:new{}
@@ -148,6 +151,7 @@ function Nico_Techno_Colony:GetDeathEffect(p1)
     local astar = bnb.libs.astar
     
     local function currentCreepCheck(p)
+		if not (GAME and Game and GAME.lmn_creep) then return end
         return GAME.lmn_creep[p2idx(p)]
     end
 

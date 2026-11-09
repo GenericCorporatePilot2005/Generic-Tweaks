@@ -24,10 +24,8 @@ modApi:appendAsset("img/units/player/chomper_palette_3.png", mod.resourcePath ..
 
 --Chili
 local spritesChili = options["Nico_Chili_Sprites"].value
-LOG("spritesChili: " .. spritesChili)
 
 if spritesChili==2 then
-    LOG(" -> Alpha!")
     Nico_TW_chili.Icon="weapons/lmn_ChiliAtk2.png"
     modApi:appendAsset("img/units/player/lmn_chili.png", mod.resourcePath .."img/units/aliens/chilialt1.png")
     modApi:appendAsset("img/units/player/lmn_chili_ns.png", mod.resourcePath .."img/units/aliens/chilialt1_ns.png")
@@ -37,7 +35,6 @@ if spritesChili==2 then
     modApi:appendAsset("img/units/player/lmn_chili_broken.png", mod.resourcePath .."img/units/aliens/chilialt1_broken.png")
     modApi:appendAsset("img/units/player/lmn_chili_w_broken.png", mod.resourcePath .."img/units/aliens/chilialt1_w_broken.png")
 elseif spritesChili==3 then
-    LOG(" -> Leader!")
     Nico_TW_chili.Icon="weapons/lmn_ChiliAtkB.png"
     modApi:appendAsset("img/units/player/lmn_chili.png", mod.resourcePath .."img/units/aliens/chilialt2.png")
     modApi:appendAsset("img/units/player/lmn_chili_ns.png", mod.resourcePath .."img/units/aliens/chilialt2_ns.png")
@@ -46,15 +43,9 @@ elseif spritesChili==3 then
     modApi:appendAsset("img/units/player/lmn_chili_w.png", mod.resourcePath .."img/units/aliens/chilialt2_w.png")
     modApi:appendAsset("img/units/player/lmn_chili_broken.png", mod.resourcePath .."img/units/aliens/chilialt2_broken.png")
     modApi:appendAsset("img/units/player/lmn_chili_w_broken.png", mod.resourcePath .."img/units/aliens/chilialt2_w_broken.png")
-else
-    LOG(" -> Default!")
 end
 --Puffer
-    local spritesPuffer = options["Nico_Puffer_Sprites"].value
-
-    LOG("spritesPuffer: " .. spritesPuffer)
-
-    if spritesPuffer==1 then
+    if options["Nico_Puffer_Sprites"].value then
         modApi:appendAsset("img/units/player/lmn_puffer.png", mod.resourcePath .."img/units/aliens/pufferalt.png")
         modApi:appendAsset("img/units/player/lmn_puffer_ns.png", mod.resourcePath .."img/units/aliens/pufferalt_ns.png")
         modApi:appendAsset("img/units/player/lmn_puffer_h.png", mod.resourcePath .."img/units/aliens/pufferalt_h.png")
@@ -66,7 +57,6 @@ end
     end
 --Chomper
     local spritesChomper = options["Nico_Chomper_Sprites"].value
-    LOG("spritesChomper: " .. spritesChomper)
 
     if spritesChomper==2 then
         lmn_Chomper.Icon = path .."img/units/aliens/chomperalt1ic.png"

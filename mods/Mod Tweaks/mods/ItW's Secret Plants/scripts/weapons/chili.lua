@@ -2,7 +2,7 @@
 Nico_TW_chili = Prime_Flamethrower:new{
 	Name = "Chili Breath",
 	Icon = "weapons/lmn_ChiliAtk1.png",
-	Description = "Breathe fire on two tiles, damage the first target.\nCan self-detonate, blasting all adjacent tiles for double damage, and damaging self.",
+	Description = "Breathe fire on two tiles, damage the first target.\nCan self-detonate, blasting all adjacent tiles for double damage, damaging self, and cracking own's tile.",
 	Class = "TechnoVek",
 	Explosion = "",
 	Range = 2,
@@ -30,11 +30,10 @@ Nico_TW_chili = Prime_Flamethrower:new{
 
 function Nico_TW_chili:GetTargetArea(p)
 	local ret = PointList()
-
+	ret:push_back(p)
 	for i = DIR_START, DIR_END do
 		for k = 1, self.PathSize do
 			local curr = DIR_VECTORS[i]*k + p
-            ret:push_back(p)
 			ret:push_back(curr)
 			if not Board:IsValid(curr) then
 				break
@@ -52,7 +51,7 @@ function Nico_TW_chili:GetSkillEffect(p1, p2)
     if p1==p2 then
         local crack=SpaceDamage(p1,self.Damage)
         crack.iCrack=EFFECT_CREATE
-        crack.iFire = 1
+        crack.iFire = 0
         ret:AddBounce(p1,1)
         ret:AddDamage(crack)
         for i = DIR_START, DIR_END do
